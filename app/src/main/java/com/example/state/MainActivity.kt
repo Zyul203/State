@@ -1,6 +1,5 @@
-package com.example.state
+package com.example.estate
 
-import Screen.Inicio
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,13 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.state.ui.theme.StateTheme
-import androidx.compose.runtime.getValue //AGREGAR MANUALMENTE
-import androidx.compose.runtime.setValue //AGREGAR MANUALMENTE
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,8 +20,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             StateTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    var x by remember { mutableStateOf(0) }
-                    Inicio(modifier = Modifier.padding(innerPadding), x, {x += 1 })
+                    Greeting(
+                        name = "Android",
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
         }
@@ -43,8 +40,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    StateTheme {
+fun GreetingPreview() { StateTheme {
         Greeting("Android")
     }
 }
