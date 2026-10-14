@@ -26,10 +26,42 @@ import androidx.compose.runtime.setValue //AGREGAR MANUALMENTE
 import androidx.compose.ui.unit.dp
 
 
+
+//Buscar como pasar funciones como parametros. Como recuperar valores de cuadro de texto, una variable asignar a un elemento. Que es un viewModel
+//Asociar una variable de estado a un cuadro de texto para manipularlo
+//Aprender a pasar funciones con funciones de otros parametros
+/*
+Composable muestra algo grafico
+
+fun sumar(a:() -> Unit, b:c () -> Unit)
+{
+a(); b();
+}
+
+ */
+
+
 @Composable
-fun InicioScreen{
+fun InicioScreen(modifier: Modifier)
+{
+    var nombreEstado by rememberSaveable() {mutableStateOf("") }
+    var ListaNombres by
+}
 
 
+
+
+
+
+
+
+
+//PATRON State Hoisting (hoist state)
+
+@Composable
+fun InicioScreeen{
+//Juego del gato (variables de estado)
+//Lista normal (lista con las rrrrr), lista normal, lista pasandole texto con un estado. Lista pintada. Estados superiores, pasando funcionalidades, calculadora
     Column(modifier = modifier)
     {
         Box(modifier = Modifier.height(200.dp).padding(15.dp).fillMaxWidth())

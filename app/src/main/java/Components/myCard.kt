@@ -19,7 +19,8 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun myCart(modifier: Modifier, nombre:String){
+fun myCart(modifier: Modifier, nombre:String)
+{
     Box(modifier = Modifier.fillMaxSize().height(70.dp)
         .border(
             width = 2.dp,
@@ -27,3 +28,5 @@ fun myCart(modifier: Modifier, nombre:String){
             shape = RoundedCornerShape(12.dp)
         ).background(Color.White),)
 }
+
+
