@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 //Aprender a pasar funciones con funciones de otros parametros
 /*
 Composable muestra algo grafico
-
+Aprender la funcion WHEN en Kotlin
 fun sumar(a:() -> Unit, b:c () -> Unit)
 {
 a(); b();
@@ -60,7 +60,7 @@ fun InicioScreen(modifier: Modifier)
 
 @Composable
 fun InicioScreeen{
-//Juego del gato (variables de estado)
+//Juego del gato (variables de estado) 7°. Lista con colores. Calculadora 6°. En la lista tu escribes el color y lo pinte(When)
 //Lista normal (lista con las rrrrr), lista normal, lista pasandole texto con un estado. Lista pintada. Estados superiores, pasando funcionalidades, calculadora
     Column(modifier = modifier)
     {
