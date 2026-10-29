@@ -1,5 +1,6 @@
 package com.example.state
 
+
 import Components.AforoControlesRow
 import Components.AforoMainCard
 import Components.CerrarDiaButton
@@ -14,28 +15,34 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.state.ui.theme.amarilloFuerte
+import com.example.state.ui.theme.verdeClaro
+import com.example.state.ui.theme.verdeFuerte
+
 
 const val AFORO_MAX = 50
 
 @Composable
-fun AforoScreen(modifier: Modifier = Modifier) {
-    var actuales by remember { mutableStateOf(32) } // Valor inicial de ejemplo
-    var visitasDelDia by remember { mutableStateOf(118) }
+fun AforoScreen(modifier: Modifier = Modifier)
+{
+    var personasSala by remember { mutableStateOf(20) }
+    var visitasDelDia by remember { mutableStateOf(68) }
 
     // Valores derivados
-    val porcentaje = actuales / AFORO_MAX.toFloat()
+    val porcentaje = personasSala / AFORO_MAX.toFloat() //Puse uno float para que porcentaje sea float
 
-    // Determinación del color según las reglas de negocio
-    val colorIndicador = when {
+    // Determinación del color según la ocupación
+    val colorIndicador = when
+    {
         porcentaje >= 1f -> Color.Red // Rojo 100%
-        porcentaje >= 0.7f -> Color.Yellow // Amarillo 70% - 99%
-        else -> Color.Green // Verde < 70%
+        porcentaje >= 0.7f -> amarilloFuerte // Amarillo 70% - 99%
+        else -> verdeFuerte // Verde < 70%
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF9F6FC))
+            .background(Color.White)
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -55,7 +62,7 @@ fun AforoScreen(modifier: Modifier = Modifier) {
         )
 
         AforoMainCard(
-            actuales = actuales,
+            personasSala = personasSala,
             aforoMax = AFORO_MAX,
             porcentaje = porcentaje,
             colorIndicador = colorIndicador
@@ -63,15 +70,15 @@ fun AforoScreen(modifier: Modifier = Modifier) {
 
         // Fila de botones Entra / Sale
         AforoControlesRow(
-            onSaleClick = { if (actuales > 0) actuales-- },
+            onSaleClick = { if (personasSala > 0) personasSala-- },
             onEntraClick = {
-                if (actuales < AFORO_MAX) {
-                    actuales++
+                if (personasSala < AFORO_MAX) {
+                    personasSala++
                     visitasDelDia++
                 }
             },
-            canSale = actuales > 0,
-            canEntra = actuales < AFORO_MAX
+            canSale = personasSala > 0,
+            canEntra = personasSala < AFORO_MAX
         )
 
         // Tarjeta de Visitas del Día
@@ -92,7 +99,7 @@ fun AforoScreen(modifier: Modifier = Modifier) {
         // Botón Cerrar Día
         CerrarDiaButton(
             onClick = {
-                actuales = 0
+                personasSala = 0
                 visitasDelDia = 0
             }
         )

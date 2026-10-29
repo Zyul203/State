@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AforoMainCard(
-    actuales: Int,
+    personasSala: Int,
     aforoMax: Int,
     porcentaje: Float,
     colorIndicador: Color,
@@ -29,7 +29,7 @@ fun AforoMainCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "$actuales / $aforoMax",
+                text = "$personasSala / $aforoMax",
                 fontSize = 48.sp,
                 fontWeight = FontWeight.Bold,
                 color = colorIndicador
