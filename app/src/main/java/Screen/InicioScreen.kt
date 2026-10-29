@@ -25,16 +25,16 @@ const val AFORO_MAX = 50
 @Composable
 fun AforoScreen(modifier: Modifier = Modifier)
 {
-    var personasSala by remember { mutableStateOf(20) }
+    var personasSala by remember { mutableStateOf(21) }
     var visitasDelDia by remember { mutableStateOf(68) }
 
-    // Valores derivados
-    val porcentaje = personasSala / AFORO_MAX.toFloat() //Puse uno float para que porcentaje sea float
+    //Valor del porcentaje para la barra de ocupacion
+    val porcentaje = personasSala / AFORO_MAX.toFloat() //Puse uno float para que porcentaje sea float, se le pone val porque el valor se cambia indirectamente con la variable "personasSala"
 
     // Determinación del color según la ocupación
-    val colorIndicador = when
+    val colorIndicador: Color = when
     {
-        porcentaje >= 1f -> Color.Red // Rojo 100%
+        porcentaje == 1f -> Color.Red // Rojo 100%
         porcentaje >= 0.7f -> amarilloFuerte // Amarillo 70% - 99%
         else -> verdeFuerte // Verde < 70%
     }
@@ -43,9 +43,10 @@ fun AforoScreen(modifier: Modifier = Modifier)
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(24.dp),
+            .padding(25.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
+    )
+    {
         Spacer(modifier = Modifier.weight(0.1f))
 
         Text(
@@ -87,7 +88,7 @@ fun AforoScreen(modifier: Modifier = Modifier)
         // Leyenda de colores
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = Arrangement.SpaceAround //SpaceAround: Deja mismo espacio entre elementos | SpaceBetween: Primer elemento a la izq y ultimo elemento al final de la pantalla
         ) {
             Text(text = "🟢 Verde < 70%", fontSize = 12.sp, color = Color.DarkGray)
             Text(text = "🟡 Amarillo 70–99%", fontSize = 12.sp, color = Color.DarkGray)
