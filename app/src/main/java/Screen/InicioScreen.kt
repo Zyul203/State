@@ -32,10 +32,6 @@ fun AforoScreen(modifier: Modifier = Modifier)
     var personasSala by remember { mutableStateOf(30) }
     var visitasDelDia by remember { mutableStateOf(68) }
 
-    //Valor del porcentaje para la barra de ocupacion
-    val porcentaje = personasSala / AFORO_MAX.toFloat() //Variable Derivada. Puse uno float para que porcentaje sea float, se le pone val porque el valor se cambia indirectamente con la variable "personasSala"
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,8 +57,7 @@ fun AforoScreen(modifier: Modifier = Modifier)
         //SECCION - Aforo disponible
         AforoMainCard(
             personasSala = personasSala,
-            aforoMax = AFORO_MAX,
-            porcentaje = porcentaje,
+            aforoMax = AFORO_MAX
         )
 
         // Fila de botones Entra / Sale

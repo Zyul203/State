@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.state.AFORO_MAX
 import com.example.state.ui.theme.amarilloClaro
 import com.example.state.ui.theme.amarilloFuerte
 import com.example.state.ui.theme.gris
@@ -19,9 +20,12 @@ import com.example.state.ui.theme.verdeClaro
 import com.example.state.ui.theme.verdeFuerte
 
 @Composable
-fun AforoMainCard( personasSala: Int, aforoMax: Int, porcentaje: Float,
-                   modifier: Modifier = Modifier) //El Modifier se pone al final, si no se usa no afecta a la funcion
+fun AforoMainCard( personasSala: Int, aforoMax: Int, modifier: Modifier = Modifier) //El Modifier se pone al final, si no se usa no afecta a la funcion
 {
+
+    //Valor del porcentaje para la barra de ocupacion
+    val porcentaje = personasSala / AFORO_MAX.toFloat() //Variable Derivada. Puse uno float para que porcentaje sea float, se le pone val porque el valor se cambia indirectamente con la variable "personasSala"
+
     val colorBackground = when
     {
         porcentaje == 1f -> rojoClaro
@@ -47,7 +51,7 @@ fun AforoMainCard( personasSala: Int, aforoMax: Int, porcentaje: Float,
     {
         Column(
             modifier = Modifier.padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally //Como los elementos se acomodan en vertical por el column, solo se necesita decirle cómo alinearlos a lo ancho
         )
         {
             Text(
@@ -71,7 +75,7 @@ fun AforoMainCard( personasSala: Int, aforoMax: Int, porcentaje: Float,
                     .fillMaxWidth()
                     .height(8.dp),
                 color = colorIndicador,
-                trackColor = Color(0xFFD1E7DD)
+                trackColor = gris
             )
 
             Spacer(modifier = Modifier.height(12.dp))
