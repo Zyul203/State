@@ -1,21 +1,24 @@
 package com.example.state
+
+import Components.AforoControlesRow
+import Components.AforoMainCard
+import Components.CerrarDiaButton
+import Components.VisitasCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 const val AFORO_MAX = 50
 
 @Composable
-fun AforoScreen() {
+fun AforoScreen(modifier: Modifier = Modifier) {
     var actuales by remember { mutableStateOf(32) } // Valor inicial de ejemplo
     var visitasDelDia by remember { mutableStateOf(118) }
 
@@ -36,12 +39,14 @@ fun AforoScreen() {
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // Título de la sección superior
+        Spacer(modifier = Modifier.weight(0.1f))
+
         Text(
             text = "Biblioteca Central",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF1D1B20)
+            color = Color(0xFF1D1B20),
+
         )
         Text(
             text = "Sala de estudio · capacidad $AFORO_MAX",
@@ -49,111 +54,28 @@ fun AforoScreen() {
             color = Color(0xFF49454F)
         )
 
-        // Tarjeta principal de Aforo
-        Card(
-            shape = RoundedCornerShape(24.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E9)),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(
-                modifier = Modifier.padding(20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "$actuales / $AFORO_MAX",
-                    fontSize = 48.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = colorIndicador
-                )
-                Text(
-                    text = "personas en la sala",
-                    fontSize = 14.sp,
-                    color = Color(0xFF49454F)
-                )
+        AforoMainCard(
+            actuales = actuales,
+            aforoMax = AFORO_MAX,
+            porcentaje = porcentaje,
+            colorIndicador = colorIndicador
+        )
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Barra de progreso
-                LinearProgressIndicator(
-                    progress = { porcentaje },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(8.dp),
-                    color = colorIndicador,
-                    trackColor = Color(0xFFD1E7DD)
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Text(
-                    text = "${(porcentaje * 100).toInt()} % de ocupación",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = colorIndicador
-                )
-                Text(
-                    text = "Aforo disponible",
-                    fontSize = 12.sp,
-                    color = Color(0xFF49454F)
-                )
-            }
-        }
-
-        // Fila de Botones: Sale y Entra
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            OutlinedButton(
-                onClick = { if (actuales > 0) actuales-- },
-                enabled = actuales > 0,
-                modifier = Modifier.weight(1f).height(56.dp),
-                shape = RoundedCornerShape(28.dp)
-            ) {
-                Text(text = "− Sale", fontSize = 16.sp)
-            }
-
-            Button(
-                onClick = {
-                    if (actuales < AFORO_MAX) {
-                        actuales++
-                        visitasDelDia++
-                    }
-                },
-                enabled = actuales < AFORO_MAX,
-                modifier = Modifier.weight(1f).height(56.dp),
-                shape = RoundedCornerShape(28.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6750A4))
-            ) {
-                Text(text = "+ Entra", fontSize = 16.sp)
-            }
-        }
+        // Fila de botones Entra / Sale
+        AforoControlesRow(
+            onSaleClick = { if (actuales > 0) actuales-- },
+            onEntraClick = {
+                if (actuales < AFORO_MAX) {
+                    actuales++
+                    visitasDelDia++
+                }
+            },
+            canSale = actuales > 0,
+            canEntra = actuales < AFORO_MAX
+        )
 
         // Tarjeta de Visitas del Día
-        Card(
-            shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFFF3EDF7)),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(20.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column {
-                    Text(text = "Visitas del día", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1D1B20))
-                    Text(text = "Solo suma las entradas", fontSize = 12.sp, color = Color(0xFF49454F))
-                }
-                Text(
-                    text = "$visitasDelDia",
-                    fontSize = 36.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF1D1B20)
-                )
-            }
-        }
+        VisitasCard(visitasDelDia = visitasDelDia)
 
         // Leyenda de colores
         Row(
@@ -168,24 +90,12 @@ fun AforoScreen() {
         Spacer(modifier = Modifier.weight(1f))
 
         // Botón Cerrar Día
-        OutlinedButton(
+        CerrarDiaButton(
             onClick = {
                 actuales = 0
                 visitasDelDia = 0
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(54.dp),
-            shape = RoundedCornerShape(27.dp),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFFB3261E))
-        ) {
-            Text(text = "Cerrar día", fontSize = 16.sp, fontWeight = FontWeight.Bold)
-        }
+            }
+        )
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun AforoScreenPreview() {
-    AforoScreen()
-}
