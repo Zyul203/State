@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import com.example.state.ui.theme.amarilloFuerte
 import com.example.state.ui.theme.verdeClaro
 import com.example.state.ui.theme.verdeFuerte
+import com.example.state.ui.theme.gris
+
 
 
 const val AFORO_MAX = 50
@@ -47,21 +49,21 @@ fun AforoScreen(modifier: Modifier = Modifier)
         verticalArrangement = Arrangement.spacedBy(16.dp)
     )
     {
-        Spacer(modifier = Modifier.weight(0.1f))
+        Spacer(modifier = Modifier.height(25.dp))
 
         Text(
             text = "Biblioteca Central",
             fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF1D1B20),
-
+            fontWeight = FontWeight.Bold
         )
+
         Text(
-            text = "Sala de estudio · capacidad $AFORO_MAX",
+            text = "Sala de estudio - Capacidad $AFORO_MAX",
             fontSize = 14.sp,
-            color = Color(0xFF49454F)
+            color = gris
         )
 
+        //SECTION - Aforo disponible
         AforoMainCard(
             personasSala = personasSala,
             aforoMax = AFORO_MAX,

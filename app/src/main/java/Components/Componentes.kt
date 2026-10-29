@@ -12,13 +12,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AforoMainCard(
-    personasSala: Int,
-    aforoMax: Int,
-    porcentaje: Float,
-    colorIndicador: Color,
-    modifier: Modifier = Modifier
-) {
+fun AforoMainCard( personasSala: Int, aforoMax: Int, porcentaje: Float, colorIndicador: Color,
+                   modifier: Modifier = Modifier)
+{
     Card(
         shape = RoundedCornerShape(24.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E9)),
