@@ -12,5 +12,9 @@ val Pink40 = Color(0xFF7D5260)
 //VARIABLES LOCALES
 val verdeFuerte = Color(0xFF2e7d32)
 val verdeClaro = Color(0xFFe8f5e9)
-val amarilloFuerte = Color(0xFFFFC107)
+val amarilloFuerte = Color(0xFFFDBE00)
+val amarilloClaro = Color(0xFFF8EBC7)
+
+val rojoClaro = Color(0xFFF6C2BF)
+
 val gris = Color(0xFF444440)

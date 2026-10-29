@@ -13,8 +13,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.state.ui.theme.StateTheme
 import com.example.state.ui.theme.amarilloFuerte
 import com.example.state.ui.theme.verdeClaro
 import com.example.state.ui.theme.verdeFuerte
@@ -27,19 +29,12 @@ const val AFORO_MAX = 50
 @Composable
 fun AforoScreen(modifier: Modifier = Modifier)
 {
-    var personasSala by remember { mutableStateOf(21) }
+    var personasSala by remember { mutableStateOf(30) }
     var visitasDelDia by remember { mutableStateOf(68) }
 
     //Valor del porcentaje para la barra de ocupacion
-    val porcentaje = personasSala / AFORO_MAX.toFloat() //Puse uno float para que porcentaje sea float, se le pone val porque el valor se cambia indirectamente con la variable "personasSala"
+    val porcentaje = personasSala / AFORO_MAX.toFloat() //Variable Derivada. Puse uno float para que porcentaje sea float, se le pone val porque el valor se cambia indirectamente con la variable "personasSala"
 
-    // Determinación del color según la ocupación
-    val colorIndicador: Color = when
-    {
-        porcentaje == 1f -> Color.Red // Rojo 100%
-        porcentaje >= 0.7f -> amarilloFuerte // Amarillo 70% - 99%
-        else -> verdeFuerte // Verde < 70%
-    }
 
     Column(
         modifier = Modifier
@@ -63,12 +58,11 @@ fun AforoScreen(modifier: Modifier = Modifier)
             color = gris
         )
 
-        //SECTION - Aforo disponible
+        //SECCION - Aforo disponible
         AforoMainCard(
             personasSala = personasSala,
             aforoMax = AFORO_MAX,
             porcentaje = porcentaje,
-            colorIndicador = colorIndicador
         )
 
         // Fila de botones Entra / Sale
@@ -109,3 +103,9 @@ fun AforoScreen(modifier: Modifier = Modifier)
     }
 }
 
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewAfora()
+{
+    StateTheme {AforoScreen() }
+}

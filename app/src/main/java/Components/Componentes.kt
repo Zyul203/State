@@ -9,21 +9,47 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.state.ui.theme.amarilloClaro
+import com.example.state.ui.theme.amarilloFuerte
+import com.example.state.ui.theme.gris
+import com.example.state.ui.theme.rojoClaro
+import com.example.state.ui.theme.verdeClaro
+import com.example.state.ui.theme.verdeFuerte
 
 @Composable
-fun AforoMainCard( personasSala: Int, aforoMax: Int, porcentaje: Float, colorIndicador: Color,
-                   modifier: Modifier = Modifier)
+fun AforoMainCard( personasSala: Int, aforoMax: Int, porcentaje: Float,
+                   modifier: Modifier = Modifier) //El Modifier se pone al final, si no se usa no afecta a la funcion
 {
-    Card(
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E9)),
+    val colorBackground = when
+    {
+        porcentaje == 1f -> rojoClaro
+        porcentaje >= 0.7f -> amarilloClaro
+        else -> verdeClaro
+    }
+
+    // Determinación del color según la ocupación
+    val colorIndicador: Color = when
+    {
+        porcentaje == 1f -> Color.Red // Rojo 100%
+        porcentaje >= 0.7f -> amarilloFuerte // Amarillo 70% - 99%
+        else -> verdeFuerte // Verde < 70%
+    }
+
+
+
+    Card( //Card: Viene siendo como un div para agrupar elementos
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = colorBackground),
         modifier = modifier.fillMaxWidth()
-    ) {
+    )
+    {
         Column(
             modifier = Modifier.padding(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        )
+        {
             Text(
                 text = "$personasSala / $aforoMax",
                 fontSize = 48.sp,
@@ -33,7 +59,7 @@ fun AforoMainCard( personasSala: Int, aforoMax: Int, porcentaje: Float, colorInd
             Text(
                 text = "personas en la sala",
                 fontSize = 14.sp,
-                color = Color(0xFF49454F)
+                color = gris
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -64,6 +90,8 @@ fun AforoMainCard( personasSala: Int, aforoMax: Int, porcentaje: Float, colorInd
         }
     }
 }
+
+
 
 
 // Fila de Botones: Sale y Entra
