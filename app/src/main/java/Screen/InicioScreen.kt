@@ -83,7 +83,7 @@ fun AforoScreen(modifier: Modifier = Modifier)
             Text(text = "🔴 Rojo 100%", fontSize = 12.sp, color = Color.DarkGray)
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(140.dp))
 
         // SECCION: Botón Cerrar Día
         CerrarDiaButton(
