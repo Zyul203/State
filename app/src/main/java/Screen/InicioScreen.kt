@@ -1,13 +1,12 @@
 package com.example.state
 
 
-import Components.AforoControlesRow
+import Components.AforoControles
 import Components.AforoMainCard
 import Components.CerrarDiaButton
 import Components.VisitasCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -17,9 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.state.ui.theme.StateTheme
-import com.example.state.ui.theme.amarilloFuerte
-import com.example.state.ui.theme.verdeClaro
-import com.example.state.ui.theme.verdeFuerte
 import com.example.state.ui.theme.gris
 
 
@@ -60,23 +56,24 @@ fun AforoScreen(modifier: Modifier = Modifier)
             aforoMax = AFORO_MAX
         )
 
-        // Fila de botones Entra / Sale
-        AforoControlesRow(
-            onSaleClick = { if (personasSala > 0) personasSala-- },
+        //SECCION - Botones Entra / Sale
+        AforoControles(
+            onSaleClick = { if (personasSala > 0) personasSala-- }, //En el llamado de funciones es donde le digo a las acciones o estados que hacer
             onEntraClick = {
-                if (personasSala < AFORO_MAX) {
+                if (personasSala < AFORO_MAX)
+                {
                     personasSala++
                     visitasDelDia++
                 }
             },
-            canSale = personasSala > 0,
+            canSale = personasSala > 0, //Mientras se cumplan pasaran un true
             canEntra = personasSala < AFORO_MAX
         )
 
-        // Tarjeta de Visitas del Día
+        // SECCION: Tarjeta de Visitas del Día
         VisitasCard(visitasDelDia = visitasDelDia)
 
-        // Leyenda de colores
+        // SECCION: Leyenda de colores
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround //SpaceAround: Deja mismo espacio entre elementos | SpaceBetween: Primer elemento a la izq y ultimo elemento al final de la pantalla
@@ -88,7 +85,7 @@ fun AforoScreen(modifier: Modifier = Modifier)
 
         Spacer(modifier = Modifier.weight(1f))
 
-        // Botón Cerrar Día
+        // SECCION: Botón Cerrar Día
         CerrarDiaButton(
             onClick = {
                 personasSala = 0
