@@ -16,67 +16,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.state.ui.theme.StateTheme
 import androidx.compose.runtime.getValue //AGREGAR MANUALMENTE
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue //AGREGAR MANUALMENTE
 import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun Inicio(modifier : Modifier, numero: Int, miClick:()-> Unit )
+fun Inicio(modifier : Modifier = Modifier)
 {
-    var x by remember { mutableStateOf(0) } //rememberSaveable: Asi se guarda la variable al rotar el celular
+    var contador by rememberSaveable { mutableIntStateOf(0) }
 
-    Column(modifier = modifier)
+    Column(modifier = Modifier
+    )
     {
-        Text(numero.toString(), fontSize = 50.sp)
-        Button(onClick =  miClick) {
-
+        Text(text = "$contador")
+        Button(onClick = { contador++ }) {
             Text("Sumar")
         }
     }
 }
 
-@Composable
-fun Ejemplo()
-{
-    var texto by remember {mutableStateOf("")}
-
-    TextField(
-        value = texto, onValueChange = {nuevoTexto -> texto = nuevoTexto}
-    )
-}
-
-@Composable
-fun IniScreen(modifier: Modifier)
-{
-    var x by rememberSaveable {mutableStateOf("0")}
-    var y by rememberSaveable {mutableStateOf("0")}
-    var c by rememberSaveable {mutableStateOf("0")}
-
-
-    TextField(value = x, onValueChange = {nuevoTexto -> x = nuevoTexto})
-    Spacer(modifier = Modifier.padding(30.dp))
-    TextField(value = y, onValueChange = {nuevoTexto -> y = nuevoTexto})
-    Spacer(modifier = Modifier.padding(30.dp))
-    Button(onClick = {
-        c=x+y
-    }) { Text("Sumar") }
-    Text(c, fontSize = 50.sp)
-    Text(c, fontSize = 50.sp)
-
-}
-
-
-//Investigar por es posible poner it en vez de nuevo texto
-
-@Preview
-@Composable
-fun Preview(){
-    StateTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            var x by remember { mutableStateOf(0) }
-            Inicio(modifier = Modifier.padding(innerPadding), x, {x += 1 })
-        }
-
-    }
-}
