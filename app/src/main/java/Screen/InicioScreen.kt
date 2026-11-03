@@ -39,6 +39,16 @@ fun InicioScreen(modifier : Modifier = Modifier)
         )
 
         Text(text = "Propina", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+
+        Row(modifier = Modifier.fillMaxWidth())
+        {
+            FilterChip(
+                selected = selectPropina,
+                onClick = { onClickPropinaChange(true) },
+                label = { Text("Serif") }
+            )
+        }
+
     }
 }
 
