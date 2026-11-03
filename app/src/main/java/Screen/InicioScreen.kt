@@ -46,11 +46,11 @@ fun InicioScreen(modifier : Modifier = Modifier)
         catalogo[i].precio * cantidades[i]
     }
 
-    // Regla de descuento: 10% si subtotal >= $200
+    // 10% si subtotal >= $200
     val descuento = if (subtotal >= 200.0) subtotal * 0.10 else 0.0
     val subtotalConDescuento = subtotal - descuento
 
-    // Regla de envío: $0 sin artículos; GRATIS (0.0) si subtotal tras descuento >= $150; si no, $25.00
+    // $0 sin artículos; GRATIS (0.0) si subtotal tras descuento >= $150; si no, $25.00
     val costoEnvio = when {
         totalArticulos == 0 -> 0.0
         subtotalConDescuento >= 150.0 -> 0.0
