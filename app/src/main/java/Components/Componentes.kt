@@ -1,6 +1,7 @@
 package Components
 
 import Screen.Producto
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,7 +25,8 @@ import androidx.compose.ui.unit.sp
 import java.util.Locale
 
 
-// 3. Componente Fila de Producto (Stateless)
+// Componente Fila de Producto
+@SuppressLint("DefaultLocale")
 @Composable
 fun ProductoItem(
     producto: Producto,
@@ -36,22 +38,21 @@ fun ProductoItem(
             .fillMaxWidth()
             .padding(vertical = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
+    )
+    {
         Column {
             Text(
                 text = producto.nombre,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF1D1B20)
             )
             Text(
-                text = String.format(Locale.US, "$%.2f c/u", producto.precio),
+                text = String.format("$%.2f c/u", producto.precio),
                 fontSize = 13.sp,
-                color = Color(0xFF49454F)
             )
         }
 
-        // Controles de cantidad (- / +)
+        // Controles de cantidad
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
