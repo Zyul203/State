@@ -1,6 +1,7 @@
 package Screen
 
 import Components.ControlesLectura
+import Components.VistaPrevia
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -36,30 +37,28 @@ enum class Interlineado(val medida : Float)
     AMPLIO(1.6f)
 }
 
+// 2. Pantalla Padre (Dueño del estado)
 @Composable
-fun PantallaPrincipal(modifier : Modifier = Modifier)
-{
-    //ESTADOS
-    var tamano by remember {mutableStateOf(18f)}
-    var interlineado by remember { mutableStateOf(Interlineado.NORMAL) }
-    var modoOscuro by remember { mutableStateOf(false) }
-    var fuenteSerif by remember { mutableStateOf(false) }
+fun LecturaScreen(modifier : Modifier = Modifier) {
+    // Estados requeridos en la pantalla padre
+    var tamano by remember { mutableStateOf(18f) } // Valor por defecto 18 sp
+    var interlineado by remember { mutableStateOf(Interlineado.NORMAL) } // Por defecto Normal
+    var modoOscuro by remember { mutableStateOf(false) } // Por defecto claro
+    var usaSerif by remember { mutableStateOf(false) } // Por defecto Sans (false)
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
-            .padding(16.dp)
-    )
-    {
+            .padding(16.dp),
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
         // Título de la pantalla
         Text(
             text = "Ajustes de lectura",
             fontSize = 20.sp,
-            fontWeight = FontWeight.ExtraBold
+            fontWeight = FontWeight.Bold
         )
-
-
 
         // Controles de configuración (Hijo 1)
         ControlesLectura(
@@ -69,13 +68,33 @@ fun PantallaPrincipal(modifier : Modifier = Modifier)
             onInterlineadoChange = { interlineado = it },
             modoOscuro = modoOscuro,
             onModoOscuroChange = { modoOscuro = it },
-            fuenteSerif = fuenteSerif,
-            onFuenteSerifChange = { fuenteSerif = it }
+            usaSerif = usaSerif,
+            onUsaSerifChange = { usaSerif = it }
         )
 
+        // Vista previa en vivo (Hijo 2)
+        VistaPrevia(
+            texto = "Era una noche tranquila en el pueblo cuando las campanas comenzaron a sonar, y nadie supo por qué.",
+            tamano = tamano,
+            interlineado = interlineado,
+            modoOscuro = modoOscuro,
+            usaSerif = usaSerif
+        )
 
-
-
+        // Botón Restablecer
+        Button(
+            onClick = {
+                tamano = 18f
+                interlineado = Interlineado.NORMAL
+                modoOscuro = false
+                usaSerif = false
+            },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(24.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+        ) {
+            Text(text = "Restablecer", color = MaterialTheme.colorScheme.primary)
+        }
     }
 }
 

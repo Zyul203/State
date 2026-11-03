@@ -1,5 +1,6 @@
 package com.example.state
 
+import Screen.LecturaScreen
 import Screen.PantallaPrincipal
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             StateTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    PantallaPrincipal(modifier = Modifier.padding(innerPadding))
+                    LecturaScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -36,7 +37,7 @@ fun PreviewMain()
 {
     StateTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            PantallaPrincipal(modifier = Modifier.padding(innerPadding))
+            LecturaScreen(modifier = Modifier.padding(innerPadding))
         }
     }
 }
