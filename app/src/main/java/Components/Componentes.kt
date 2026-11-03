@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 // 3. Composable de Controles
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ControlesLectura(
     tamano: Float,
@@ -49,8 +48,6 @@ fun ControlesLectura(
             value = tamano,
             onValueChange = onTamanoChange,
             valueRange = 14f..32f,
-
-
         )
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {

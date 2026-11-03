@@ -59,6 +59,8 @@ fun PantallaPrincipal(modifier : Modifier = Modifier)
             fontWeight = FontWeight.ExtraBold
         )
 
+
+
         // Controles de configuración (Hijo 1)
         ControlesLectura(
             tamano = tamano,
