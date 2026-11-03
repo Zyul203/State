@@ -27,7 +27,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
     var opcionSeleccionada by remember { mutableStateOf(0) }
 
 
-    Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(20.dp), verticalArrangement = Arrangement.spacedBy(20.dp))
+    Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(20.dp), verticalArrangement = Arrangement.spacedBy(15.dp))
     {
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -42,7 +42,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
 
         Text(text = "Propina", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
-        Row(modifier = Modifier.fillMaxWidth().pad)
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(15.dp))
         {
             // Chip 0
             FilterChip(
@@ -70,6 +70,11 @@ fun InicioScreen(modifier : Modifier = Modifier)
             )
         }
 
+        Row(modifier = Modifier)
+        {
+            Text(text = "Personas", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+
+        }
 
 
     }
