@@ -1,29 +1,150 @@
 package Screen
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
-import com.example.state.ui.theme.StateTheme
-import androidx.compose.runtime.getValue //AGREGAR MANUALMENTE
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue //AGREGAR MANUALMENTE
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-
+import androidx.compose.ui.unit.sp
 
 @Composable
-fun InicioScreen(modifier : Modifier = Modifier)
-{
+fun InicioScreen(modifier: Modifier = Modifier) {
+    // Guarda el texto completo que se muestra en la pantalla de la calculadora
+    var pantalla by rememberSaveable { mutableStateOf("") }
 
+    // Variables para recordar la operación
+    var primerNumero by rememberSaveable { mutableStateOf("") }
+    var operador by rememberSaveable { mutableStateOf("") }
+    var reiniciarPantallaAlEscribir by rememberSaveable { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(20.dp),
+        verticalArrangement = Arrangement.spacedBy(15.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(20.dp))
+
+        //pantalla del resultado
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(100.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(Color(0xFFE0E0E0))
+                .padding(16.dp),
+            contentAlignment = Alignment.CenterEnd
+        ) {
+            Text(
+                text = pantalla.ifEmpty { "0" },
+                fontSize = 36.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                textAlign = TextAlign.End,
+                maxLines = 2
+            )
+        }
+
+        // 🎛Cuadrícula de Botones de la Calculadora
+        val botones = listOf(
+            listOf("C", "", "", "/"),
+            listOf("7", "8", "9", "*"),
+            listOf("4", "5", "6", "-"),
+            listOf("1", "2", "3", "+"),
+            listOf("0", ".", "", "=")
+        )
+
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            botones.forEach { fila ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    fila.forEach { texto ->
+                        // Si el texto está vacío, creamos un espacio invisible para mantener la alineación
+                        if (texto.isEmpty()) {
+                            Spacer(modifier = Modifier.weight(1f))
+                        } else {
+                            Button(
+                                onClick = {
+                                    when (texto) {
+                                        "C" -> {
+                                            pantalla = ""
+                                            primerNumero = ""
+                                            operador = ""
+                                            reiniciarPantallaAlEscribir = false
+                                        }
+                                        "+", "-", "*", "/" -> {
+                                            if (pantalla.isNotEmpty() && pantalla != "Syntax Error") {
+                                                primerNumero = pantalla
+                                                operador = texto
+                                                reiniciarPantallaAlEscribir = true
+                                            }
+                                        }
+                                        "=" -> {
+                                            if (primerNumero.isNotEmpty() && operador.isNotEmpty() && pantalla.isNotEmpty()) {
+                                                val n1 = primerNumero.toDoubleOrNull() ?: 0.0
+                                                val n2 = pantalla.toDoubleOrNull() ?: 0.0
+
+                                                // Validación de división por cero
+                                                if (operador == "/" && n2 == 0.0) {
+                                                    pantalla = "Syntax Error"
+                                                } else {
+                                                    val resultado = when (operador) {
+                                                        "+" -> n1 + n2
+                                                        "-" -> n1 - n2
+                                                        "*" -> n1 * n2
+                                                        "/" -> n1 / n2
+                                                        else -> 0.0
+                                                    }
+
+                                                    pantalla = resultado.toString()
+
+                                                }
+                                                // Reseteamos estados de la operación
+                                                primerNumero = ""
+                                                operador = ""
+                                                reiniciarPantallaAlEscribir = true
+                                            }
+                                        }
+                                        else -> { // Al presionar números o el punto "."
+                                            if (reiniciarPantallaAlEscribir || pantalla == "Syntax Error") {
+                                                pantalla = texto
+                                                reiniciarPantallaAlEscribir = false
+                                            } else {
+                                                pantalla += texto
+                                            }
+                                        }
+                                    }
+                                },
+                                modifier = Modifier.weight(1f).height(70.dp),
+                                shape = RoundedCornerShape(10.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = when (texto) {
+                                        "C" -> Color(0xFFFF5252) // Rojo para borrar
+                                        "=", "+", "-", "*", "/" -> Color(0xFFFF9800) // Naranja para operaciones
+                                        else -> MaterialTheme.colorScheme.primary // Azul por defecto para números
+                                    }
+                                )
+                            ) {
+                                Text(text = texto, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
-
