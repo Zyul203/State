@@ -3,6 +3,7 @@ package Screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.getValue
@@ -24,7 +25,8 @@ data class Producto(
 fun InicioScreen(modifier : Modifier = Modifier)
 {
     var montoInput by rememberSaveable { mutableStateOf("") }
-    var opcionSeleccionada by remember { mutableStateOf(0) }
+    var opcionSeleccionada by rememberSaveable { mutableStateOf(0) }
+    var personasCantidad by rememberSaveable { mutableStateOf(0) }
 
 
     Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(20.dp), verticalArrangement = Arrangement.spacedBy(15.dp))
@@ -74,6 +76,28 @@ fun InicioScreen(modifier : Modifier = Modifier)
         {
             Text(text = "Personas", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
+            OutlinedIconButton(
+                onClick = { if (personasCantidad > 0) onCantidadChange(personasCantidad - 1) },
+                enabled = personasCantidad > 0,
+                modifier = Modifier.size(36.dp),
+                shape = CircleShape
+            ) {
+                Text(text = "−", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            }
+
+            Text(
+                text = "$personasCantidad",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+            )
+
+            OutlinedIconButton(
+                onClick = { if (personasCantidad < 10) onCantidadChange(personasCantidad + 1) },
+                enabled = personasCantidad < 10,
+                modifier = Modifier.size(36.dp),
+                shape = CircleShape
+            ) {
+                Text(text = "+", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         }
 
 
