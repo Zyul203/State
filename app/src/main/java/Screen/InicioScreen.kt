@@ -24,7 +24,7 @@ data class Producto(
 fun InicioScreen(modifier : Modifier = Modifier)
 {
     var montoInput by rememberSaveable { mutableStateOf("") }
-    var propinaSelect by remember { mutableStateOf(false) } // Por defecto Sans (false)
+    var opcionSeleccionada by remember { mutableStateOf(0) }
 
 
     Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(20.dp), verticalArrangement = Arrangement.spacedBy(20.dp))
@@ -42,17 +42,31 @@ fun InicioScreen(modifier : Modifier = Modifier)
 
         Text(text = "Propina", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
-        Row(modifier = Modifier.fillMaxWidth())
+        Row(modifier = Modifier.fillMaxWidth().pad)
         {
+            // Chip 0
             FilterChip(
-                selected = propinaSelect,
-                onClick = {propinaSelect = !propinaSelect},
-                label = { Text("Serif") }
+                selected = opcionSeleccionada == 0,
+                onClick = { opcionSeleccionada = 0 }, // Al hacer clic, cambia el estado a 0
+                label = { Text("10%") }
             )
+            // Chip 1
             FilterChip(
-                selected = propinaSelect,
-                onClick = {propinaSelect = !propinaSelect},
-                label = { Text("Serif") }
+                selected = opcionSeleccionada == 1,
+                onClick = { opcionSeleccionada = 1 }, // Al hacer clic, cambia el estado a 1
+                label = { Text("20%") }
+            )
+            // Chip 2
+            FilterChip(
+                selected = opcionSeleccionada == 2,
+                onClick = { opcionSeleccionada = 2 }, // Al hacer clic, cambia el estado a 2
+                label = { Text("30%") }
+            )
+            // Chip 3
+            FilterChip(
+                selected = opcionSeleccionada == 3,
+                onClick = { opcionSeleccionada = 3 }, // Al hacer clic, cambia el estado a 3
+                label = { Text("Otro") }
             )
         }
 
