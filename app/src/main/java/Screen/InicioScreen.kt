@@ -21,62 +21,22 @@ import androidx.compose.runtime.setValue //AGREGAR MANUALMENTE
 import androidx.compose.ui.unit.dp
 
 
-@Composable
-fun Inicio(modifier : Modifier, numero: Int, miClick:()-> Unit )
+enum class Interlineado(val medida : Float)
 {
-    var x by remember { mutableStateOf(0) } //rememberSaveable: Asi se guarda la variable al rotar el celular
-
-    Column(modifier = modifier)
-    {
-        Text(numero.toString(), fontSize = 50.sp)
-        Button(onClick =  miClick) {
-
-            Text("Sumar")
-        }
-    }
+    COMPACTO(1.0f),
+    NORMAL(1.3f),
+    AMPLIO(1.6f)
 }
 
 @Composable
-fun Ejemplo()
+fun PantallaPrincipal(modifier : Modifier = Modifier)
 {
-    var texto by remember {mutableStateOf("")}
-
-    TextField(
-        value = texto, onValueChange = {nuevoTexto -> texto = nuevoTexto}
-    )
-}
-
-@Composable
-fun IniScreen(modifier: Modifier)
-{
-    var x by rememberSaveable {mutableStateOf("0")}
-    var y by rememberSaveable {mutableStateOf("0")}
-    var c by rememberSaveable {mutableStateOf("0")}
-
-
-    TextField(value = x, onValueChange = {nuevoTexto -> x = nuevoTexto})
-    Spacer(modifier = Modifier.padding(30.dp))
-    TextField(value = y, onValueChange = {nuevoTexto -> y = nuevoTexto})
-    Spacer(modifier = Modifier.padding(30.dp))
-    Button(onClick = {
-        c=x+y
-    }) { Text("Sumar") }
-    Text(c, fontSize = 50.sp)
-    Text(c, fontSize = 50.sp)
+    //ESTADOS
+    var sc1_tamano by remember {mutableStateOf(18f)}
+    var sc2_interlineado by remember { mutableStateOf(Interlineado.NORMAL) }
+    var sc3_modoOscuro by remember { mutableStateOf(false) }
+    var sc4_fuenteSerif by remember { mutableStateOf(false) }
 
 }
 
 
-//Investigar por es posible poner it en vez de nuevo texto
-
-@Preview
-@Composable
-fun Preview(){
-    StateTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            var x by remember { mutableStateOf(0) }
-            Inicio(modifier = Modifier.padding(innerPadding), x, {x += 1 })
-        }
-
-    }
-}
