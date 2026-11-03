@@ -24,6 +24,8 @@ data class Producto(
 fun InicioScreen(modifier : Modifier = Modifier)
 {
     var montoInput by rememberSaveable { mutableStateOf("") }
+    var propinaSelect by remember { mutableStateOf(false) } // Por defecto Sans (false)
+
 
     Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(20.dp), verticalArrangement = Arrangement.spacedBy(20.dp))
     {
@@ -43,12 +45,11 @@ fun InicioScreen(modifier : Modifier = Modifier)
         Row(modifier = Modifier.fillMaxWidth())
         {
             FilterChip(
-                selected = selectPropina,
-                onClick = { onClickPropinaChange(true) },
+                selected = propinaSelect,
+                onClick = {propinaSelect = !propinaSelect},
                 label = { Text("Serif") }
             )
         }
-
     }
 }
 
