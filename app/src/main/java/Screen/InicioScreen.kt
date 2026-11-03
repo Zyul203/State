@@ -49,7 +49,15 @@ fun InicioScreen(modifier : Modifier = Modifier)
                 onClick = {propinaSelect = !propinaSelect},
                 label = { Text("Serif") }
             )
+            FilterChip(
+                selected = propinaSelect,
+                onClick = {propinaSelect = !propinaSelect},
+                label = { Text("Serif") }
+            )
         }
+
+
+
     }
 }
 
