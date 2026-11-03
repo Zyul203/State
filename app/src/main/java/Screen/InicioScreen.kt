@@ -1,8 +1,10 @@
 package Screen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
@@ -28,6 +30,9 @@ fun Inicio(modifier : Modifier = Modifier)
     var contador by rememberSaveable { mutableIntStateOf(0) }
 
     Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(20.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     )
     {
         Text(text = "$contador")
