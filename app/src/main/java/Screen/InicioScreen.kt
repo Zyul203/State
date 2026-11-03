@@ -110,9 +110,9 @@ fun InicioScreen(modifier : Modifier = Modifier)
                             shape = RoundedCornerShape(8.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = when (tablero[indice]) {
-                                    "X" -> Color(0xFF2196F3) // Azul para las X
-                                    "O" -> Color(0xFFFF5722) // Naranja para las O
-                                    else -> Color(0xFFE0E0E0) // Gris para las vacías
+                                    "X" -> Color(0xFF9C27B0)
+                                    "O" -> Color(0xFFFF5722)
+                                    else -> Color(0xFFE0E0E0)
                                 }
                             )
                         ) {
