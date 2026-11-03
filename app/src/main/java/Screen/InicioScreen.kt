@@ -22,61 +22,8 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun Inicio(modifier : Modifier, numero: Int, miClick:()-> Unit )
+fun InicioScreen(modifier : Modifier = Modifier)
 {
-    var x by remember { mutableStateOf(0) } //rememberSaveable: Asi se guarda la variable al rotar el celular
-
-    Column(modifier = modifier)
-    {
-        Text(numero.toString(), fontSize = 50.sp)
-        Button(onClick =  miClick) {
-
-            Text("Sumar")
-        }
-    }
-}
-
-@Composable
-fun Ejemplo()
-{
-    var texto by remember {mutableStateOf("")}
-
-    TextField(
-        value = texto, onValueChange = {nuevoTexto -> texto = nuevoTexto}
-    )
-}
-
-@Composable
-fun IniScreen(modifier: Modifier)
-{
-    var x by rememberSaveable {mutableStateOf("0")}
-    var y by rememberSaveable {mutableStateOf("0")}
-    var c by rememberSaveable {mutableStateOf("0")}
-
-
-    TextField(value = x, onValueChange = {nuevoTexto -> x = nuevoTexto})
-    Spacer(modifier = Modifier.padding(30.dp))
-    TextField(value = y, onValueChange = {nuevoTexto -> y = nuevoTexto})
-    Spacer(modifier = Modifier.padding(30.dp))
-    Button(onClick = {
-        c=x+y
-    }) { Text("Sumar") }
-    Text(c, fontSize = 50.sp)
-    Text(c, fontSize = 50.sp)
 
 }
 
-
-//Investigar por es posible poner it en vez de nuevo texto
-
-@Preview
-@Composable
-fun Preview(){
-    StateTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            var x by remember { mutableStateOf(0) }
-            Inicio(modifier = Modifier.padding(innerPadding), x, {x += 1 })
-        }
-
-    }
-}
