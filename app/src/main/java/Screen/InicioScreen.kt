@@ -77,7 +77,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
             Text(text = "Personas", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
             OutlinedIconButton(
-                onClick = { if (personasCantidad > 0) onCantidadChange(personasCantidad - 1) },
+                onClick = { if (personasCantidad > 0) personasCantidad++ else (personasCantidad - 1) },
                 enabled = personasCantidad > 0,
                 modifier = Modifier.size(36.dp),
                 shape = CircleShape
@@ -92,7 +92,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
             )
 
             OutlinedIconButton(
-                onClick = { if (personasCantidad < 10) onCantidadChange(personasCantidad + 1) },
+                onClick = { if (personasCantidad < 10) personasCantidad-- else(personasCantidad + 1) },
                 enabled = personasCantidad < 10,
                 modifier = Modifier.size(36.dp),
                 shape = CircleShape
@@ -102,5 +102,5 @@ fun InicioScreen(modifier : Modifier = Modifier)
 
 
     }
-}
+}}
 
