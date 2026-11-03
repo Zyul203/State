@@ -177,5 +177,5 @@ fun ResumenCarrito(
                 )
             }
         }
-    }Ter
+    }
 }
