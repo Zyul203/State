@@ -19,9 +19,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.state.R
 import java.util.Locale
 
 
@@ -55,7 +57,7 @@ fun ProductoItem(
         // Controles de cantidad
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             OutlinedIconButton(
                 onClick = { if (cantidad > 0) onCantidadChange(cantidad - 1) },
@@ -70,7 +72,6 @@ fun ProductoItem(
                 text = "$cantidad",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(horizontal = 4.dp)
             )
 
             OutlinedIconButton(
@@ -85,7 +86,8 @@ fun ProductoItem(
     }
 }
 
-// 4. Componente Card de Resumen (Stateless)
+// Card de Resumen
+@SuppressLint("DefaultLocale")
 @Composable
 fun ResumenCarrito(
     articulos: Int,
@@ -93,21 +95,24 @@ fun ResumenCarrito(
     descuento: Double,
     envio: Double,
     total: Double
-) {
+)
+{
+    val morado = colorResource(id = R.color.purple_500)
+
     Card(
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF3EDF7)),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFE5E4E5)),
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(
-            modifier = Modifier.padding(18.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier.padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Artículos", color = Color(0xFF49454F), fontSize = 14.sp)
+                Text(text = "Artículos", fontSize = 14.sp)
                 Text(text = "$articulos", fontWeight = FontWeight.Bold, fontSize = 14.sp)
             }
 
@@ -115,11 +120,10 @@ fun ResumenCarrito(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Subtotal", color = Color(0xFF49454F), fontSize = 14.sp)
+                Text(text = "Subtotal", fontSize = 14.sp)
                 Text(
-                    text = String.format(Locale.US, "$%.2f", subtotal),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp
+                    text = String.format("$%.2f", subtotal),
+                    fontWeight = FontWeight.Bold, fontSize = 14.sp
                 )
             }
 
@@ -127,9 +131,9 @@ fun ResumenCarrito(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Descuento 10 %", color = Color(0xFF49454F), fontSize = 14.sp)
+                Text(text = "Descuento 10 %", fontSize = 14.sp)
                 Text(
-                    text = if (descuento > 0) String.format(Locale.US, "-$%.2f", descuento) else "$0.00",
+                    text = if (descuento > 0) String.format("-$%.2f", descuento) else "$0.00",
                     color = Color(0xFF2E7D32),
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp
@@ -140,14 +144,14 @@ fun ResumenCarrito(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Envío", color = Color(0xFF49454F), fontSize = 14.sp)
+                Text(text = "Envío",fontSize = 14.sp)
                 Text(
                     text = when {
                         articulos == 0 -> "$0.00"
                         envio == 0.0 -> "GRATIS"
-                        else -> String.format(Locale.US, "$%.2f", envio)
+                        else -> String.format("$%.2f", envio)
                     },
-                    color = if (envio == 0.0 && articulos > 0) Color(0xFF2E7D32) else Color(0xFF1D1B20),
+                    color = if (envio == 0.0 && articulos > 0) Color(0xFF2E7D32) else Color.Black,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp
                 )
@@ -164,15 +168,14 @@ fun ResumenCarrito(
                     text = "TOTAL",
                     fontWeight = FontWeight.ExtraBold,
                     fontSize = 18.sp,
-                    color = Color(0xFF1D1B20)
                 )
                 Text(
-                    text = String.format(Locale.US, "$%.2f", total),
+                    text = String.format("$%.2f", total),
                     fontWeight = FontWeight.ExtraBold,
                     fontSize = 22.sp,
-                    color = Color(0xFF65558F)
+                    color = morado
                 )
             }
         }
-    }
+    }Ter
 }
