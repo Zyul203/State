@@ -1,6 +1,6 @@
 package com.example.state
 
-import Screen.Inicio
+import Screen.InicioScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -25,27 +25,20 @@ class MainActivity : ComponentActivity() {
         setContent {
             StateTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    var x by remember { mutableStateOf(0) }
-                    Inicio(modifier = Modifier.padding(innerPadding), x, {x += 1 })
+                    InicioScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
     }
 }
-//Juego del gato (variables de estado) 7°. Lista con colores. Calculadora 6°. En la lista tu escribes el color y lo pinte(When)
-//Lista normal (lista con las rrrrr), lista normal, lista pasandole texto con un estado. Lista pintada. Estados superiores, pasando func
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun Preview() {
     StateTheme {
-        Greeting("Android")
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            InicioScreen(modifier = Modifier.padding(innerPadding))
+        }
     }
 }

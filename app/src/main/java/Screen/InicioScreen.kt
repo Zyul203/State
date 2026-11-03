@@ -5,78 +5,142 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.example.state.ui.theme.StateTheme
-import androidx.compose.runtime.getValue //AGREGAR MANUALMENTE
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue //AGREGAR MANUALMENTE
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
-
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
-fun Inicio(modifier : Modifier, numero: Int, miClick:()-> Unit )
+fun InicioScreen(modifier : Modifier = Modifier)
 {
-    var x by remember { mutableStateOf(0) } //rememberSaveable: Asi se guarda la variable al rotar el celular
+    val tablero = remember { mutableStateListOf("", "", "", "", "", "", "", "", "") } //9 posiciones en blanco
+    var turnoX by rememberSaveable { mutableStateOf(true) }  //Turno de X
+    var mensajeEstado by rememberSaveable { mutableStateOf("Turno de: X") }
+    var juegoTerminado by rememberSaveable { mutableStateOf(false) }
 
-    Column(modifier = modifier)
+    // Función interna para verificar si alguien ganó
+    fun verificarGanador()
     {
-        Text(numero.toString(), fontSize = 50.sp)
-        Button(onClick =  miClick) {
+        // Combinaciones ganadoras posibles en el gato
+        val lineasGanadoras = listOf(
+            listOf(0, 1, 2), listOf(3, 4, 5), listOf(6, 7, 8), // Horizontales
+            listOf(0, 3, 6), listOf(1, 4, 7), listOf(2, 5, 8), // Verticales
+            listOf(0, 4, 8), listOf(2, 4, 6)                  // Diagonales
+        )
 
-            Text("Sumar")
+        for (linea in lineasGanadoras)
+        {
+            val a = tablero[linea[0]]
+            val b = tablero[linea[1]]
+            val c = tablero[linea[2]]
+
+            if (a.isNotEmpty() && a == b && a == c)
+            {
+                mensajeEstado = "¡Ganador: $a!"
+                juegoTerminado = true
+                return
+            }
+        }
+
+        // empate
+        if (!tablero.contains(""))
+        {
+            mensajeEstado = "¡Es un Empate!"
+            juegoTerminado = true
         }
     }
-}
 
-@Composable
-fun Ejemplo()
-{
-    var texto by remember {mutableStateOf("")}
-
-    TextField(
-        value = texto, onValueChange = {nuevoTexto -> texto = nuevoTexto}
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(25.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     )
-}
+    {
+        Spacer(modifier = Modifier.height(20.dp))
 
-@Composable
-fun IniScreen(modifier: Modifier)
-{
-    var x by rememberSaveable {mutableStateOf("0")}
-    var y by rememberSaveable {mutableStateOf("0")}
-    var c by rememberSaveable {mutableStateOf("0")}
+        // Texto que indica el estado del juego actual
+        Text(
+            text = mensajeEstado,
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
+        )
 
+        // Cuadrícula del Tablero (3 filas x 3 columnas)
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            for (fila in 0..2) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    for (columna in 0..2) {
+                        val indice = fila * 3 + columna // Calcula la posición del 0 al 8
 
-    TextField(value = x, onValueChange = {nuevoTexto -> x = nuevoTexto})
-    Spacer(modifier = Modifier.padding(30.dp))
-    TextField(value = y, onValueChange = {nuevoTexto -> y = nuevoTexto})
-    Spacer(modifier = Modifier.padding(30.dp))
-    Button(onClick = {
-        c=x+y
-    }) { Text("Sumar") }
-    Text(c, fontSize = 50.sp)
-    Text(c, fontSize = 50.sp)
+                        Button(
+                            onClick = {
+                                // Solo se puede marcar si la casilla está vacía y el juego no ha terminado
+                                if (tablero[indice].isEmpty() && !juegoTerminado) {
+                                    tablero[indice] = if (turnoX) "X" else "O"
+                                    verificarGanador()
 
-}
-
-
-//Investigar por es posible poner it en vez de nuevo texto
-
-@Preview
-@Composable
-fun Preview(){
-    StateTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            var x by remember { mutableStateOf(0) }
-            Inicio(modifier = Modifier.padding(innerPadding), x, {x += 1 })
+                                    // Si el juego continúa, cambiamos el turno
+                                    if (!juegoTerminado) {
+                                        turnoX = !turnoX
+                                        mensajeEstado = "Turno de: ${if (turnoX) "X" else "O"}"
+                                    }
+                                }
+                            },
+                            modifier = Modifier.size(90.dp), // Tamaño cuadrado
+                            shape = RoundedCornerShape(8.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = when (tablero[indice]) {
+                                    "X" -> Color(0xFF2196F3) // Azul para las X
+                                    "O" -> Color(0xFFFF5722) // Naranja para las O
+                                    else -> Color(0xFFE0E0E0) // Gris para las vacías
+                                }
+                            )
+                        ) {
+                            Text(
+                                text = tablero[indice],
+                                fontSize = 32.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                color = Color.White
+                            )
+                        }
+                    }
+                }
+            }
         }
 
+        Spacer(modifier = Modifier.height(10.dp))
+
+        // Botón para reiniciar la partida
+        Button(
+            onClick = {
+                for (i in 0..8) tablero[i] = ""
+                turnoX = true
+                mensajeEstado = "Turno de: X"
+                juegoTerminado = false
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Reiniciar Juego", fontSize = 18.sp)
+        }
     }
 }
