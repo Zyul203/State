@@ -40,7 +40,7 @@ fun InicioScreen(modifier: Modifier = Modifier)
     ) {
         Spacer(modifier = Modifier.height(25.dp))
 
-        Text(text = "Repetir letra",
+        Text(text = "Lista de Palabras",
             fontSize = 25.sp, fontWeight = FontWeight.ExtraBold,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
@@ -48,7 +48,7 @@ fun InicioScreen(modifier: Modifier = Modifier)
         OutlinedTextField(
             value = letraInput,
             onValueChange = { input -> letraInput = input },
-            label = { Text("Escribe una letra") },
+            label = { Text("Escribe la palabra") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -61,7 +61,7 @@ fun InicioScreen(modifier: Modifier = Modifier)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Repetir")
+            Text("Agregar")
         }
 
         HorizontalDivider()
