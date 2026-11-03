@@ -1,82 +1,155 @@
 package Screen
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import Components.ProductoItem
+import Components.ResumenCarrito
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
-import com.example.state.ui.theme.StateTheme
-import androidx.compose.runtime.getValue //AGREGAR MANUALMENTE
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue //AGREGAR MANUALMENTE
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.state.R
+
+data class Producto(
+    val nombre: String,
+    val precio: Double
+)
 
 
 @Composable
-fun Inicio(modifier : Modifier, numero: Int, miClick:()-> Unit )
+fun InicioScreen(modifier : Modifier = Modifier)
 {
-    var x by remember { mutableStateOf(0) } //rememberSaveable: Asi se guarda la variable al rotar el celular
+    val morado = colorResource(id = R.color.purple_500)
 
-    Column(modifier = modifier)
-    {
-        Text(numero.toString(), fontSize = 50.sp)
-        Button(onClick =  miClick) {
+    // Catálogo de productos fijo
+    val catalogo: List<Producto> = remember {
+        listOf(
+            Producto("Tortillas 1 kg", 24.00),
+            Producto("Leche 1 L", 27.50),
+            Producto("Huevo 12 pz", 52.00),
+            Producto("Frijol 1 kg", 38.00)
+        )
+    }
 
-            Text("Sumar")
+    val cantidades = remember { mutableStateListOf(0, 0, 0, 0) }
+    val totalArticulos = cantidades.sum()
+
+    val subtotal = catalogo.indices.sumOf { i ->
+        catalogo[i].precio * cantidades[i]
+    }
+
+    // Regla de descuento: 10% si subtotal >= $200
+    val descuento = if (subtotal >= 200.0) subtotal * 0.10 else 0.0
+    val subtotalConDescuento = subtotal - descuento
+
+    // Regla de envío: $0 sin artículos; GRATIS (0.0) si subtotal tras descuento >= $150; si no, $25.00
+    val costoEnvio = when {
+        totalArticulos == 0 -> 0.0
+        subtotalConDescuento >= 150.0 -> 0.0
+        else -> 25.0
+    }
+
+    val totalFinal = subtotalConDescuento + costoEnvio
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .statusBarsPadding()
+                .padding(20.dp)
+        ) {
+            // Titulo
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            )
+            {
+                Text(text = "Tienda Don Pepe",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+
+                // Insignia con el total de artículos
+                Box(
+                    modifier = Modifier
+                        .size(36.dp)
+                        .background(morado, shape = CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "$totalArticulos",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            // Lista de productos
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                catalogo.forEachIndexed{ index, producto ->
+                    ProductoItem(
+                        producto = producto,
+                        cantidad = cantidades[index],
+                        onCantidadChange = { nuevaCantidad -> cantidades[index] = nuevaCantidad }
+                    )
+                    HorizontalDivider()
+                }
+            }
+
+            // Card de Resumen del pedido
+            ResumenCarrito(
+                articulos = totalArticulos,
+                subtotal = subtotal,
+                descuento = descuento,
+                envio = costoEnvio,
+                total = totalFinal
+            )
+
+            Spacer(modifier = Modifier.height(15.dp))
+
+            // Botones de acción inferiores
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                OutlinedButton(
+                    onClick = {
+                        for (i in cantidades.indices) {
+                            cantidades[i] = 0
+                        }
+                    },
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(50.dp),
+                    shape = RoundedCornerShape(25.dp),
+                ) {
+                    Text(text = "Vaciar", fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+                }
+
+                Button(
+                    onClick = {},
+                    enabled = totalArticulos > 0,
+                    modifier = Modifier
+                        .weight(1.5f)
+                        .height(50.dp),
+                    shape = RoundedCornerShape(25.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = morado)
+                ) {
+                    Text(text = "Confirmar pedido", fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                }
+            }
         }
     }
-}
 
-@Composable
-fun Ejemplo()
-{
-    var texto by remember {mutableStateOf("")}
-
-    TextField(
-        value = texto, onValueChange = {nuevoTexto -> texto = nuevoTexto}
-    )
-}
-
-@Composable
-fun IniScreen(modifier: Modifier)
-{
-    var x by rememberSaveable {mutableStateOf("0")}
-    var y by rememberSaveable {mutableStateOf("0")}
-    var c by rememberSaveable {mutableStateOf("0")}
-
-
-    TextField(value = x, onValueChange = {nuevoTexto -> x = nuevoTexto})
-    Spacer(modifier = Modifier.padding(30.dp))
-    TextField(value = y, onValueChange = {nuevoTexto -> y = nuevoTexto})
-    Spacer(modifier = Modifier.padding(30.dp))
-    Button(onClick = {
-        c=x+y
-    }) { Text("Sumar") }
-    Text(c, fontSize = 50.sp)
-    Text(c, fontSize = 50.sp)
-
-}
-
-
-//Investigar por es posible poner it en vez de nuevo texto
-
-@Preview
-@Composable
-fun Preview(){
-    StateTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            var x by remember { mutableStateOf(0) }
-            Inicio(modifier = Modifier.padding(innerPadding), x, {x += 1 })
-        }
-
-    }
-}
