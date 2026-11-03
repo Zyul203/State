@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
@@ -24,12 +25,15 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun InicioScreen(modifier: Modifier = Modifier) {
+fun InicioScreen(modifier: Modifier = Modifier)
+{
     var num1 by rememberSaveable { mutableStateOf("") }
     var num2 by rememberSaveable { mutableStateOf("") }
     var resultado by rememberSaveable { mutableStateOf("") }
 
-    Column(modifier = modifier) {
+    Column(modifier = Modifier)
+    {
+        Text(text = "SUMA", modifier = Modifier.)
         TextField(
             value = num1,
             onValueChange = { num1 = it },
