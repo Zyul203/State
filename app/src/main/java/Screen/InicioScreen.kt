@@ -1,10 +1,17 @@
 package Screen
 
+import Components.ControlesLectura
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -18,6 +25,7 @@ import com.example.state.ui.theme.StateTheme
 import androidx.compose.runtime.getValue //AGREGAR MANUALMENTE
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue //AGREGAR MANUALMENTE
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 
@@ -32,11 +40,41 @@ enum class Interlineado(val medida : Float)
 fun PantallaPrincipal(modifier : Modifier = Modifier)
 {
     //ESTADOS
-    var sc1_tamano by remember {mutableStateOf(18f)}
-    var sc2_interlineado by remember { mutableStateOf(Interlineado.NORMAL) }
-    var sc3_modoOscuro by remember { mutableStateOf(false) }
-    var sc4_fuenteSerif by remember { mutableStateOf(false) }
+    var tamano by remember {mutableStateOf(18f)}
+    var interlineado by remember { mutableStateOf(Interlineado.NORMAL) }
+    var modoOscuro by remember { mutableStateOf(false) }
+    var fuenteSerif by remember { mutableStateOf(false) }
 
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .padding(16.dp)
+    )
+    {
+        // Título de la pantalla
+        Text(
+            text = "Ajustes de lectura",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.ExtraBold
+        )
+
+        // Controles de configuración (Hijo 1)
+        ControlesLectura(
+            tamano = tamano,
+            onTamanoChange = { tamano = it },
+            interlineado = interlineado,
+            onInterlineadoChange = { interlineado = it },
+            modoOscuro = modoOscuro,
+            onModoOscuroChange = { modoOscuro = it },
+            fuenteSerif = fuenteSerif,
+            onFuenteSerifChange = { fuenteSerif = it }
+        )
+
+
+
+
+    }
 }
 
 
