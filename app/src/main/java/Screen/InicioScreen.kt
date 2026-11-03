@@ -56,7 +56,7 @@ fun InicioScreen(modifier: Modifier = Modifier)
             items(listaDeLetras) { letra ->
                 Text(
                     text = letra,
-                    fontSize = 22.sp, // Un poco más grande para que resalte
+                    fontSize = 22.sp,
                     modifier = Modifier.padding(vertical = 4.dp)
                 )
             }
