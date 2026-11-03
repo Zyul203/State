@@ -1,7 +1,6 @@
 package com.example.state
 
 import Screen.LecturaScreen
-import Screen.PantallaPrincipal
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
