@@ -70,7 +70,7 @@ fun AforoScreen(modifier: Modifier = Modifier)
             canEntra = personasSala < AFORO_MAX
         )
 
-        // SECCION: Tarjeta de Visitas del Día
+        // SECCION: Tarjeta de Visitas del Dí
         VisitasCard(visitasDelDia = visitasDelDia)
 
         // SECCION: Leyenda de colores
