@@ -1,6 +1,8 @@
 package Screen
 
 
+import android.widget.Space
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.CircleShape
@@ -9,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -72,32 +75,35 @@ fun InicioScreen(modifier : Modifier = Modifier)
             )
         }
 
-        Row(modifier = Modifier)
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
         {
             Text(text = "Personas", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
-            OutlinedIconButton(
-                onClick = { if (personasCantidad > 0) personasCantidad++ else (personasCantidad - 1) },
-                enabled = personasCantidad > 0,
-                modifier = Modifier.size(36.dp),
-                shape = CircleShape
-            ) {
-                Text(text = "−", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Row (modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically)
+            {
+                OutlinedIconButton(
+                    onClick = { if (personasCantidad > 0) personasCantidad++ else (personasCantidad - 1) },
+                    enabled = personasCantidad > 0,
+                    modifier = Modifier.size(36.dp),
+                    shape = CircleShape
+                ) {
+                    Text(text = "−", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                }
+
+                Text(
+                    text = "$personasCantidad",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+
+                OutlinedIconButton(
+                    onClick = { if (personasCantidad < 10) personasCantidad-- else(personasCantidad + 1) },
+                    enabled = personasCantidad < 10,
+                    modifier = Modifier.size(36.dp),
+                    shape = CircleShape
+                ) {
+                    Text(text = "+", fontSize = 18.sp, fontWeight = FontWeight.Bold)
             }
-
-            Text(
-                text = "$personasCantidad",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-            )
-
-            OutlinedIconButton(
-                onClick = { if (personasCantidad < 10) personasCantidad-- else(personasCantidad + 1) },
-                enabled = personasCantidad < 10,
-                modifier = Modifier.size(36.dp),
-                shape = CircleShape
-            ) {
-                Text(text = "+", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         }
 
 
