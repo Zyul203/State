@@ -31,7 +31,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
     var montoInput by rememberSaveable { mutableStateOf("") }
     var opcionSeleccionada by rememberSaveable { mutableStateOf(0) }
     var personasCantidad by rememberSaveable { mutableStateOf(0) }
-    var redondearPersona by rememberSaveable { mutableStateOf(true) }
+    var redondearPersona by rememberSaveable { mutableStateOf(false) }
 
 
     Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(20.dp), verticalArrangement = Arrangement.spacedBy(15.dp))
@@ -114,8 +114,8 @@ fun InicioScreen(modifier : Modifier = Modifier)
             Text(text = "Redondear por Persona", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
             Switch(
-                checked = modoOscuro,
-                onCheckedChange = onModoOscuroChange,
+                checked = redondearPersona,
+                onCheckedChange = onRedondearPersonaChange,
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = Color.White,
                     checkedTrackColor = Color.Magenta,      // Fondo cuando está encendido
