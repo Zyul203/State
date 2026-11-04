@@ -115,13 +115,15 @@ fun InicioScreen(modifier : Modifier = Modifier)
 
             Switch(
                 checked = redondearPersona,
-                onCheckedChange = onRedondearPersonaChange,
+                onCheckedChange = {cambioState -> if (redondearPersona == false ) redondearPersona = true else redondearPersona = false},
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = Color.White,
                     checkedTrackColor = Color.Magenta,      // Fondo cuando está encendido
                     checkedBorderColor = Color.White,
                 ))
         }
+
+        HorizontalDivider()
     }
 }
 
