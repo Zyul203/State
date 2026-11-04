@@ -13,6 +13,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,6 +31,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
     var montoInput by rememberSaveable { mutableStateOf("") }
     var opcionSeleccionada by rememberSaveable { mutableStateOf(0) }
     var personasCantidad by rememberSaveable { mutableStateOf(0) }
+    var redondearPersona by rememberSaveable { mutableStateOf(true) }
 
 
     Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(20.dp), verticalArrangement = Arrangement.spacedBy(15.dp))
@@ -111,32 +113,14 @@ fun InicioScreen(modifier : Modifier = Modifier)
         {
             Text(text = "Redondear por Persona", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
-            Row (modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically)
-            {
-                OutlinedIconButton(
-                    onClick = { if (personasCantidad > 0) personasCantidad++ else (personasCantidad - 1) },
-                    enabled = personasCantidad > 0,
-                    modifier = Modifier.size(36.dp),
-                    shape = CircleShape
-                ) {
-                    Text(text = "−", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                }
-
-                Text(
-                    text = "$personasCantidad",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-
-                OutlinedIconButton(
-                    onClick = { if (personasCantidad < 10) personasCantidad-- else(personasCantidad + 1) },
-                    enabled = personasCantidad < 10,
-                    modifier = Modifier.size(36.dp),
-                    shape = CircleShape
-                ) {
-                    Text(text = "+", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                }
-            }
+            Switch(
+                checked = modoOscuro,
+                onCheckedChange = onModoOscuroChange,
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color.White,
+                    checkedTrackColor = Color.Magenta,      // Fondo cuando está encendido
+                    checkedBorderColor = Color.White,
+                ))
         }
     }
 }
