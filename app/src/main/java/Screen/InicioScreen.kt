@@ -103,10 +103,41 @@ fun InicioScreen(modifier : Modifier = Modifier)
                     shape = CircleShape
                 ) {
                     Text(text = "+", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                }
             }
         }
 
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
+        {
+            Text(text = "Redondear por Persona", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
+            Row (modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically)
+            {
+                OutlinedIconButton(
+                    onClick = { if (personasCantidad > 0) personasCantidad++ else (personasCantidad - 1) },
+                    enabled = personasCantidad > 0,
+                    modifier = Modifier.size(36.dp),
+                    shape = CircleShape
+                ) {
+                    Text(text = "−", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                }
+
+                Text(
+                    text = "$personasCantidad",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+
+                OutlinedIconButton(
+                    onClick = { if (personasCantidad < 10) personasCantidad-- else(personasCantidad + 1) },
+                    enabled = personasCantidad < 10,
+                    modifier = Modifier.size(36.dp),
+                    shape = CircleShape
+                ) {
+                    Text(text = "+", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                }
+            }
+        }
     }
-}}
+}
 
