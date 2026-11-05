@@ -24,14 +24,12 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -79,7 +77,7 @@ fun Propina(propinaSeleccionada: Int, OnPropinaSeleccionada: (Int) -> Unit, prop
             Slider(
                 value = propinaSliderValor,
                 onValueChange = OnpropinaSliderValor,
-                valueRange = 0f..99f,
+                valueRange = 0f..100f,
             )
         }
     }
@@ -96,8 +94,7 @@ fun Resumen(propinaSeleccionada: Int, propinaSliderValor: Float, subtotal: Float
         {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
             {
-                if ()
-                Text(text = "Propina (${propinaSeleccionada} %)")
+                if (propinaSeleccionada != 1) Text(text = "Propina ($propinaSeleccionada) %)") else Text(text = "Propina (${String.format("%.2f", propinaSliderValor)} %)")
                 Text(text = "$ ${String.format("%.2f",subtotal)}")
             }
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
