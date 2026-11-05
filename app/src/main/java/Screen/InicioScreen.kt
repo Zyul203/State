@@ -1,6 +1,7 @@
 package Screen
 
 
+import Components.Propina
 import Components.Resumen
 import android.annotation.SuppressLint
 import android.widget.Space
@@ -31,24 +32,21 @@ data class Producto(
     val precio: Double
 )
 
-enum class propinaPorcentaje (val porc : Double)
-{
-    porciento10(0.1),
-    porciento20(0.2),
-    porciento30(0.3),
-    porcientoOtro(0.0)
-}
+
 @SuppressLint("DefaultLocale")
 @Composable
 fun InicioScreen(modifier : Modifier = Modifier)
 {
+
     var montoInput by rememberSaveable { mutableStateOf("") }
-    var propinaSeleccionada by rememberSaveable { mutableStateOf(propinaPorcentaje.porciento10) }
+    var propinaSeleccionada by rememberSaveable { mutableStateOf(0) }
     var personasCantidad by rememberSaveable { mutableStateOf(0) }
     var redondearPersona by rememberSaveable { mutableStateOf(false) }
     var subtotal: Float by rememberSaveable {mutableStateOf(0.00f) }
     var total : Float by rememberSaveable {mutableStateOf(0.00f) }
     var totalDividido : Float by rememberSaveable { mutableStateOf(0.00f) }
+    var propinaSliderValor by rememberSaveable { mutableStateOf(15f) } // Valor por defecto si elige "Otro"
+
 
 
     Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(20.dp), verticalArrangement = Arrangement.spacedBy(15.dp))
@@ -67,33 +65,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
 
         Text(text = "Propina", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(15.dp))
-        {
-            // Chip 0
-            FilterChip(
-                selected = propinaPorcentaje.porciento10,
-                onClick = { propinaSeleccionada = 0 }, // Al hacer clic, cambia el estado a 0
-                label = { Text("10%") }
-            )
-            // Chip 1
-            FilterChip(
-                selected = propinaSeleccionada == 1,
-                onClick = { propinaSeleccionada = 1 }, // Al hacer clic, cambia el estado a 1
-                label = { Text("20%") }
-            )
-            // Chip 2
-            FilterChip(
-                selected = propinaSeleccionada == 2,
-                onClick = { propinaSeleccionada = 2 }, // Al hacer clic, cambia el estado a 2
-                label = { Text("30%") }
-            )
-            // Chip 3
-            FilterChip(
-                selected = propinaSeleccionada == 3,
-                onClick = { propinaSeleccionada = 3 }, // Al hacer clic, cambia el estado a 3
-                label = { Text("Otro") }
-            )
-        }
+        Propina(propinaSeleccionada = propinaSeleccionada, propinaSliderValor = propinaSliderValor)
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
         {
@@ -142,7 +114,9 @@ fun InicioScreen(modifier : Modifier = Modifier)
         }
         HorizontalDivider()
 
-        Resumen(propinaSeleccionada = propinaSeleccionada, subtotal = subtotal, total = total, personasCantidad = personasCantidad)
+        Resumen(propinaSeleccionada = propinaSeleccionada,onPropinaSelected = { nuevaPropina ->
+            propinaSeleccionada = nuevaPropina // <--- Aquí la pantalla principal actualiza su propio estado
+        }, subtotal = subtotal, total = total, personasCantidad = personasCantidad)
     }
 }
 
