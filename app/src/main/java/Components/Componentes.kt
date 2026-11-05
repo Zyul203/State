@@ -77,7 +77,7 @@ fun Propina(propinaSeleccionada: Int, OnPropinaSeleccionada: (Int) -> Unit, prop
             Slider(
                 value = propinaSliderValor,
                 onValueChange = OnpropinaSliderValor,
-                valueRange = 0f..100f,
+                valueRange = 0f..30f,
             )
         }
     }

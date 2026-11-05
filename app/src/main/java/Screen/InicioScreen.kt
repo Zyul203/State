@@ -27,11 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
-data class Producto(
-    val nombre: String,
-    val precio: Double
-)
-
 
 @SuppressLint("DefaultLocale")
 @Composable
