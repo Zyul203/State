@@ -72,6 +72,7 @@ fun ControlesLectura(
                 inactiveTrackColor = Color.LightGray, // Color de la pista sin recorrer
             )
         )
+
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = "A", fontSize = 14.sp)
             Text(text = "A", fontSize = 22.sp)
