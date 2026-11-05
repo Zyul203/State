@@ -94,9 +94,3 @@ fun AforoScreen(modifier: Modifier = Modifier)
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewAfora()
-{
-    StateTheme {AforoScreen() }
-}
