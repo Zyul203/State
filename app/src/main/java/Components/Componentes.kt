@@ -89,7 +89,6 @@ fun ControlesLectura(
                     RadioButton(
                         selected = interlineado == modo,
                         onClick = { onInterlineadoChange(modo) },
-
                     )
                     Text(text = modo.name)
                 }
