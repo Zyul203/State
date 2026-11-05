@@ -2,10 +2,13 @@ package Components
 
 import Screen.Producto
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -21,9 +24,56 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.state.R
+
+
+
+
+@Composable
+fun Resumen(propinaSeleccionada: Int, subtotal: Float, total: Float, personasCantidad: Int, modifier: Modifier = Modifier)
+{
+    Box(modifier = Modifier.fillMaxWidth().height(250.dp)
+        .background(color = Color.LightGray, shape = RoundedCornerShape(20.dp)))
+    {
+        Column(modifier = Modifier.fillMaxWidth().padding(20.dp), verticalArrangement = Arrangement.spacedBy(8.dp))
+        {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
+            {
+                Text(text = "Propina ($propinaSeleccionada %)")
+                Text(text = "$ ${String.format("%.2f",subtotal)}")
+            }
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
+            {
+                Text(text = "Total con propina")
+                Text(text = "$ ${String.format("%.2f",total)}")
+            }
+            HorizontalDivider()
+            Text(text = "Cada quien paga", modifier= Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+            Text(text = "$ ${String.format("%.2f", total)}", modifier= Modifier.fillMaxWidth(), textAlign = TextAlign.Center , fontWeight = FontWeight.ExtraBold, fontSize = 50.sp)
+            Text(text = "entre $personasCantidad personas", modifier= Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+            Text(text = "Sobrante por redondeo $0.00", modifier= Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Componente Fila de Producto

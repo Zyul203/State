@@ -1,6 +1,7 @@
 package Screen
 
 
+import Components.Resumen
 import android.annotation.SuppressLint
 import android.widget.Space
 import androidx.compose.foundation.background
@@ -20,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -38,7 +40,9 @@ fun InicioScreen(modifier : Modifier = Modifier)
     var propinaSeleccionada by rememberSaveable { mutableStateOf(0) }
     var personasCantidad by rememberSaveable { mutableStateOf(0) }
     var redondearPersona by rememberSaveable { mutableStateOf(false) }
-    var subtotal by rememberSaveable {mutableStateOf(0.00) }
+    var subtotal: Float by rememberSaveable {mutableStateOf(0.00f) }
+    var total : Float by rememberSaveable {mutableStateOf(0.00f) }
+    var totalDividido : Float by rememberSaveable { mutableStateOf(0.00f) }
 
 
     Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(20.dp), verticalArrangement = Arrangement.spacedBy(15.dp))
@@ -52,6 +56,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
             onValueChange = { input -> montoInput = input },
             label = { Text("Monto de la cuenta") },
             modifier = Modifier.fillMaxWidth()
+
         )
 
         Text(text = "Propina", fontSize = 20.sp, fontWeight = FontWeight.Bold)
@@ -125,29 +130,13 @@ fun InicioScreen(modifier : Modifier = Modifier)
                 onCheckedChange = {cambioState -> if (redondearPersona == false ) redondearPersona = true else redondearPersona = false},
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = Color.White,
-                    checkedTrackColor = Color.Magenta,      // Fondo cuando está encendido
+                    checkedTrackColor = Color.Magenta,
                     checkedBorderColor = Color.White,
                 ))
         }
         HorizontalDivider()
 
-        Box(modifier = Modifier.fillMaxWidth().height(300.dp)
-            .background(color = Color.LightGray, shape = RoundedCornerShape(20.dp)))
-        {
-            Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp))
-            {
-                Row(modifier = Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.SpaceBetween)
-                {
-                    Text(text = "Propina ($propinaSeleccionada %)")
-                    Text(text = "$ (${String.format("%.2f",subtotal)} %)")
-
-                }
-
-            }
-
-
-        }
-
+        Resumen()
     }
 }
 
