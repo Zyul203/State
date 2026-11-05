@@ -67,7 +67,7 @@ fun ControlesLectura(
             onValueChange = onTamanoChange,
             valueRange = 14f..32f,
             colors = SliderDefaults.colors(
-                thumbColor = colorMorado,              // Color de la bolita/pulgar
+                thumbColor = colorMorado,               // Color de la bolita/pulgar
                 activeTrackColor = colorMorado,        // Color de la pista recorrida
                 inactiveTrackColor = Color.LightGray, // Color de la pista sin recorrer
             )
