@@ -136,7 +136,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
         }
         HorizontalDivider()
 
-        Resumen()
+        Resumen(propinaSeleccionada = propinaSeleccionada, subtotal = subtotal, total = total, personasCantidad = personasCantidad)
     }
 }
 
