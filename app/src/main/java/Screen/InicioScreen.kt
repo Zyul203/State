@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.getValue
@@ -22,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,8 +54,10 @@ fun InicioScreen(modifier : Modifier = Modifier)
 
         OutlinedTextField(
             value = montoInput,
-            onValueChange = { input -> montoInput = input },
+            onValueChange = { cambioState -> montoInput = cambioState },
             label = { Text("Monto de la cuenta") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            singleLine = true,
             modifier = Modifier.fillMaxWidth()
 
         )
@@ -70,7 +74,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
             Row (modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically)
             {
                 OutlinedIconButton(
-                    onClick = { if (personasCantidad > 0) personasCantidad++ else (personasCantidad - 1) },
+                    onClick = { if (personasCantidad > 0) personasCantidad-- },
                     enabled = personasCantidad > 0,
                     modifier = Modifier.size(36.dp),
                     shape = CircleShape
@@ -85,7 +89,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
                 )
 
                 OutlinedIconButton(
-                    onClick = { if (personasCantidad < 10) personasCantidad-- else(personasCantidad + 1) },
+                    onClick = { if (personasCantidad < 10) personasCantidad++ },
                     enabled = personasCantidad < 10,
                     modifier = Modifier.size(36.dp),
                     shape = CircleShape
