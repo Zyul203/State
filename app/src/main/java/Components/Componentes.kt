@@ -1,6 +1,5 @@
 package Components
 
-import Screen.Producto
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -276,7 +275,7 @@ fun VistaPrevia(
 
 
 
-
+/*
 
 // Componente Fila de Producto
 @SuppressLint("DefaultLocale")
@@ -430,3 +429,4 @@ fun ResumenCarrito(
         }
     }
 }
+*/
