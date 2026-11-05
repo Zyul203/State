@@ -45,7 +45,6 @@ fun InicioScreen(modifier : Modifier = Modifier)
     var propinaSliderValor by rememberSaveable { mutableStateOf(15f) } // Valor por defecto si elige "Otro"
 
 
-
     Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(20.dp), verticalArrangement = Arrangement.spacedBy(15.dp))
     {
         Spacer(modifier = Modifier.height(20.dp))
