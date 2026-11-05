@@ -65,7 +65,8 @@ fun InicioScreen(modifier : Modifier = Modifier)
 
         Text(text = "Propina", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
-        Propina(propinaSeleccionada = propinaSeleccionada, propinaSliderValor = propinaSliderValor)
+        Propina(propinaSeleccionada = propinaSeleccionada, OnPropinaSeleccionada = { cambioState -> propinaSeleccionada = cambioState }
+            , propinaSliderValor = propinaSliderValor, OnpropinaSliderValor = {propinaSliderValor = it}) //Cualquiera de las 2
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
         {
@@ -114,9 +115,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
         }
         HorizontalDivider()
 
-        Resumen(propinaSeleccionada = propinaSeleccionada,onPropinaSelected = { nuevaPropina ->
-            propinaSeleccionada = nuevaPropina // <--- Aquí la pantalla principal actualiza su propio estado
-        }, subtotal = subtotal, total = total, personasCantidad = personasCantidad)
+        Resumen(propinaSeleccionada = propinaSeleccionada, propinaSliderValor = propinaSliderValor, subtotal = subtotal, total = total, personasCantidad = personasCantidad)
     }
 }
 

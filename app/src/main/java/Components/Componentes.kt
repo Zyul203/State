@@ -43,32 +43,32 @@ import com.example.state.R
 
 
 @Composable
-fun Propina(propinaSeleccionada: Int, propinaSliderValor: Float, modifier: Modifier = Modifier)
+fun Propina(propinaSeleccionada: Int, OnPropinaSeleccionada: (Int) -> Unit, propinaSliderValor: Float, OnpropinaSliderValor: (Float) -> Unit)
 {
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(15.dp))
     {
         // Chip 10%
         FilterChip(
             selected = propinaSeleccionada == 10,
-            onClick = { propinaSeleccionada = 10 }, // Al hacer clic, cambia el estado a 0
+            onClick = { OnPropinaSeleccionada(10) }, // Al hacer clic, cambia el estado a 0
             label = { Text("10%") }
         )
         // Chip 20%
         FilterChip(
             selected = propinaSeleccionada == 20,
-            onClick = { propinaSeleccionada = 20 }, // Al hacer clic, cambia el estado a 1
+            onClick = { OnPropinaSeleccionada(20) }, // Al hacer clic, cambia el estado a 1
             label = { Text("20%") }
         )
         // Chip 30%
         FilterChip(
             selected = propinaSeleccionada == 30,
-            onClick = { propinaSeleccionada = 30 }, // Al hacer clic, cambia el estado a 2
+            onClick = { OnPropinaSeleccionada(30) }, // Al hacer clic, cambia el estado a 2
             label = { Text("30%") }
         )
         // Chip Otro
         FilterChip(
             selected = propinaSeleccionada == 1,
-            onClick = { propinaSeleccionada = 1 }, // Al hacer clic, cambia el estado a 3
+            onClick = { OnPropinaSeleccionada(1) }, // Al hacer clic, cambia el estado a 3
             label = { Text("Otro") }
         )
     }
@@ -78,7 +78,7 @@ fun Propina(propinaSeleccionada: Int, propinaSliderValor: Float, modifier: Modif
             Text(text = "Personalizar propina: ${propinaSliderValor.toInt()}%", fontSize = 14.sp)
             Slider(
                 value = propinaSliderValor,
-                onValueChange = { cambioState -> propinaSliderValor = cambioState},
+                onValueChange = OnpropinaSliderValor,
                 valueRange = 0f..99f,
             )
         }
@@ -87,7 +87,7 @@ fun Propina(propinaSeleccionada: Int, propinaSliderValor: Float, modifier: Modif
 
 
 @Composable
-fun Resumen(propinaSeleccionada: Int, subtotal: Float, total: Float, personasCantidad: Int, modifier: Modifier = Modifier)
+fun Resumen(propinaSeleccionada: Int, propinaSliderValor: Float, subtotal: Float, total: Float, personasCantidad: Int, modifier: Modifier = Modifier)
 {
     Box(modifier = Modifier.fillMaxWidth().height(250.dp)
         .background(color = Color.LightGray, shape = RoundedCornerShape(20.dp)))
@@ -96,7 +96,8 @@ fun Resumen(propinaSeleccionada: Int, subtotal: Float, total: Float, personasCan
         {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
             {
-                Text(text = "Propina ($propinaSeleccionada %)")
+                if ()
+                Text(text = "Propina (${propinaSeleccionada} %)")
                 Text(text = "$ ${String.format("%.2f",subtotal)}")
             }
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
