@@ -31,13 +31,19 @@ data class Producto(
     val precio: Double
 )
 
-
+enum class propinaPorcentaje (val porc : Double)
+{
+    porciento10(0.1),
+    porciento20(0.2),
+    porciento30(0.3),
+    porcientoOtro(0.0)
+}
 @SuppressLint("DefaultLocale")
 @Composable
 fun InicioScreen(modifier : Modifier = Modifier)
 {
     var montoInput by rememberSaveable { mutableStateOf("") }
-    var propinaSeleccionada by rememberSaveable { mutableStateOf(0) }
+    var propinaSeleccionada by rememberSaveable { mutableStateOf(propinaPorcentaje.porciento10) }
     var personasCantidad by rememberSaveable { mutableStateOf(0) }
     var redondearPersona by rememberSaveable { mutableStateOf(false) }
     var subtotal: Float by rememberSaveable {mutableStateOf(0.00f) }
@@ -65,7 +71,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
         {
             // Chip 0
             FilterChip(
-                selected = propinaSeleccionada == 0,
+                selected = propinaPorcentaje.porciento10,
                 onClick = { propinaSeleccionada = 0 }, // Al hacer clic, cambia el estado a 0
                 label = { Text("10%") }
             )
