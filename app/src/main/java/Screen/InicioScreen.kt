@@ -1,7 +1,9 @@
 package Screen
 
 
+import Components.MontoTextField
 import Components.Propina
+import Components.RedondearSwitchRow
 import Components.Resumen
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
@@ -40,7 +42,6 @@ fun InicioScreen(modifier : Modifier = Modifier)
 
 
 
-
     val montoInputDouble = montoInput.toDoubleOrNull() ?: 0.0
     propinaFinal = if (propinaSeleccionada != 1) montoInputDouble * (propinaSeleccionada / 100.0) else montoInputDouble * (propinaSliderValor / 100.0)
     subtotal = montoInputDouble + propinaFinal
@@ -59,13 +60,9 @@ fun InicioScreen(modifier : Modifier = Modifier)
 
         Text(text = "Cuenta dividida", fontSize = 25.sp)
 
-        OutlinedTextField(
-            value = montoInput,
-            onValueChange = { cambioState -> montoInput = cambioState },
-            label = { Text("Monto de la cuenta") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth()
+        MontoTextField(
+            montoInput = montoInput,
+            onMontoChange = { cambioState -> montoInput = cambioState }
         )
 
         Text(text = "Propina", fontSize = 20.sp, fontWeight = FontWeight.Bold)
@@ -105,19 +102,11 @@ fun InicioScreen(modifier : Modifier = Modifier)
             }
         }
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically)
-        {
-            Text(text = "Redondear por Persona", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        RedondearSwitchRow(
+            redondearPersona = redondearPersona,
+            onRedondearChange = { redondearPersona = it }
+        )
 
-            Switch(
-                checked = redondearPersona,
-                onCheckedChange = {cambioState -> if (redondearPersona == false ) redondearPersona = true else redondearPersona = false},
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = Color.White,
-                    checkedTrackColor = Color.Magenta,
-                    checkedBorderColor = Color.White,
-                ))
-        }
         HorizontalDivider()
 
         Resumen(propinaSeleccionada = propinaSeleccionada, propinaSliderValor = propinaSliderValor, subtotal = subtotal, total = total,
