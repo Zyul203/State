@@ -17,10 +17,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun InicioScreen(modifier: Modifier = Modifier) {
-    // Guarda el texto completo que se muestra en la pantalla de la calculadora
     var pantalla by rememberSaveable { mutableStateOf("") }
-
-    // Variables para recordar la operación
     var primerNumero by rememberSaveable { mutableStateOf("") }
     var operador by rememberSaveable { mutableStateOf("") }
     var reiniciarPantallaAlEscribir by rememberSaveable { mutableStateOf(false) }
@@ -31,7 +28,8 @@ fun InicioScreen(modifier: Modifier = Modifier) {
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp),
         horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    )
+    {
         Spacer(modifier = Modifier.height(20.dp))
 
         //pantalla del resultado
@@ -54,7 +52,7 @@ fun InicioScreen(modifier: Modifier = Modifier) {
             )
         }
 
-        // 🎛Cuadrícula de Botones de la Calculadora
+
         val botones = listOf(
             listOf("C", "", "", "/"),
             listOf("7", "8", "9", "*"),
@@ -113,7 +111,7 @@ fun InicioScreen(modifier: Modifier = Modifier) {
                                                     pantalla = resultado.toString()
 
                                                 }
-                                                // Reseteamos estados de la operación
+                                                // Reseteo
                                                 primerNumero = ""
                                                 operador = ""
                                                 reiniciarPantallaAlEscribir = true
@@ -133,9 +131,9 @@ fun InicioScreen(modifier: Modifier = Modifier) {
                                 shape = RoundedCornerShape(10.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = when (texto) {
-                                        "C" -> Color(0xFFFF5252) // Rojo para borrar
-                                        "=", "+", "-", "*", "/" -> Color(0xFFFF9800) // Naranja para operaciones
-                                        else -> MaterialTheme.colorScheme.primary // Azul por defecto para números
+                                        "C" -> Color(0xFFFF5252) //
+                                        "=", "+", "-", "*", "/" -> Color(0xFFFF9800)
+                                        else -> MaterialTheme.colorScheme.primary
                                     }
                                 )
                             ) {
