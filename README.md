@@ -16,8 +16,8 @@
 - **Ejercicio 3:** [Inscripción a talleres de la 'Casa del Lago'](https://github.com/Zyul203/State/blob/Ejercicio-3-Inscripcion-a-Talleres/app/src/main/java/Screen/InicioScreen.kt)
 - **Ejercicio4:** [Carrito de pedidos de la tienda 'Don Pepe'](https://github.com/Zyul203/State/blob/Ejercicio-4_Carrito-De-Pedidos/app/src/main/java/Screen/InicioScreen.kt)
 - **Ejercicio 5:** [Cuenta dividida entre amigos](https://github.com/Zyul203/State/blob/Ejercicio-5_Cuenta-Dividida/app/src/main/java/Screen/InicioScreen.kt)
-- **Ejercicio 6:** [Gestor de tareas con filtros y confirmación]()
+- **Ejercicio 6:** [Gestor de tareas con filtros y confirmación](https://github.com/Zyul203/State/blob/Ejercicio-6/app/src/main/java/Screen/InicioScreen.kt) .
 - **Ejercicio 7:** [Inicio de sesión de la app 'Clínica Vida'](https://github.com/Zyul203/State/blob/Ejercicio-7_Inicio-de-Sesion-de-la-App/app/src/main/java/Screen/InicioScreen.kt)
-- **Ejercicio 8:** [Reseñas de restaurantes]()
-- **Ejercicio 9:** [Presupuesto mensual de un estudiante foráneo]()
+- **Ejercicio 8:** [Reseñas de restaurantes](https://github.com/Zyul203/State/blob/Ejercicio-8/app/src/main/java/Screen/InicioScreen.kt) .
+- **Ejercicio 9:** [Presupuesto mensual de un estudiante foráneo](https://github.com/Zyul203/State/blob/Ejercicio-9/app/src/main/java/Screen/InicioScreen.kt) .
 - **Ejercicio 10:** [Quiz de programación](https://github.com/Zyul203/State/blob/Ejercicio-10_Quiz-De-Programacion/app/src/main/java/Screen/Screens.kt)
