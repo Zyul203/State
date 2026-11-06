@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.sp
 
 
 
-// 1. Creamos datos para que cada elemento de la lista guarde su texto y sus colores
 data class ElementoColor(
     val texto: String,
     val colorFondo: Color,
@@ -38,7 +37,6 @@ fun InicioScreen(modifier: Modifier = Modifier) {
     {
         Spacer(modifier = Modifier.height(25.dp))
 
-        // Campo de entrada de texto
         OutlinedTextField(
             value = colorInput,
             onValueChange = { colorInput = it },
@@ -46,7 +44,6 @@ fun InicioScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth(),
         )
 
-        // Botón que procesa el color y lo añade a la lista
         Button(
             onClick = {
                 if (colorInput.isNotBlank())
