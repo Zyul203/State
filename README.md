@@ -14,7 +14,7 @@
 * **Ejercicio 1:** [Control de aforo de la Biblioteca Central](https://github.com/Zyul203/State/blob/Ejercicio-1_Control-De-Aforo_/app/src/main/java/Screen/InicioScreen.kt)
 - **Ejercicio 2:** [Ajustes de lectura con vista previa en vivo](https://github.com/Zyul203/State/blob/Ejercicio-2_Ajustes-de-lectura/app/src/main/java/Screen/InicioScreen.kt)
 - **Ejercicio 3:** [Inscripción a talleres de la 'Casa del Lago'](https://github.com/Zyul203/State/blob/Ejercicio-3-Inscripcion-a-Talleres/app/src/main/java/Screen/InicioScreen.kt)
-- **Ejercicio4:** [Carrito de pedidos de la tienda 'Don Pepe'](https://github.com/Zyul203/State/blob/Ejercicio-4_Carrito-De-Pedidos/app/src/main/java/Screen/InicioScreen.kt)
+- **Ejercicio 4:** [Carrito de pedidos de la tienda 'Don Pepe'](https://github.com/Zyul203/State/blob/Ejercicio-4_Carrito-De-Pedidos/app/src/main/java/Screen/InicioScreen.kt)
 - **Ejercicio 5:** [Cuenta dividida entre amigos](https://github.com/Zyul203/State/blob/Ejercicio-5_Cuenta-Dividida/app/src/main/java/Screen/InicioScreen.kt)
 - **Ejercicio 6:** [Gestor de tareas con filtros y confirmación](https://github.com/Zyul203/State/blob/Ejercicio-6/app/src/main/java/Screen/InicioScreen.kt) .
 - **Ejercicio 7:** [Inicio de sesión de la app 'Clínica Vida'](https://github.com/Zyul203/State/blob/Ejercicio-7_Inicio-de-Sesion-de-la-App/app/src/main/java/Screen/InicioScreen.kt)
