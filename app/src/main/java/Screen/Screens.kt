@@ -25,11 +25,11 @@ data class Pregunta(
 
 
 val listaPreguntasQuiz = listOf(
-    Pregunta("que tipo de dato conviene usar para guardar el valor 3.14?", listOf("Int", "Double", "String", "Boolean"), 1),
-    Pregunta("cual es la extension de los archivos de codigo kotlin?", listOf(".java", ".kt", ".xml", ".js"), 1),
-    Pregunta("que estructura se usa para repetir un bloque de codigo?", listOf("if-else", "for / while", "val / var", "fun"), 1),
-    Pregunta("que palabra clave se usa para declarar una variable mutable en kotlin?", listOf("val", "var", "const", "static"), 1),
-    Pregunta("que layout se usa para alinear elementos uno debajo del otro en compose?", listOf("Row", "Column", "Box", "Spacer"), 1)
+    Pregunta("¿Qué tipo de dato conviene usar para guardar el valor 3.14?", listOf("Int", "Double", "String", "Boolean"), 1),
+    Pregunta("¿Qué estructura condicional se usa para tomar decisiones?", listOf("for", "print", "val", "if / else"), 3),
+    Pregunta("¿Cómo se le llama a un bloque de código reutilizable que realiza una tarea específica?", listOf("Variable", "Función", "Comentario", "Bucle"), 1),
+    Pregunta("¿Qué estructura se usa para repetir un bloque de código?", listOf("if-else", "val / var", "for / while", "fun"), 2),
+    Pregunta("¿Qué símbolos se utilizan para escribir un comentario de una sola línea en Kotlin?", listOf("//", "/*", "##", "--"), 0),
 )
 
 @Composable

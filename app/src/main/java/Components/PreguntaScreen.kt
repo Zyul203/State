@@ -15,6 +15,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.state.ui.theme.ColorBorde_correcto
+import com.example.state.ui.theme.ColorBorde_incorrecto
+import com.example.state.ui.theme.ColorFondo_correcto
+import com.example.state.ui.theme.ColorFondo_incorrecto
+import com.example.state.ui.theme.Purple40
 
 @Composable
 fun PreguntaScreen(
@@ -43,7 +48,9 @@ fun PreguntaScreen(
 
             LinearProgressIndicator(
                 progress = { progreso },
-                modifier = Modifier.fillMaxWidth().height(8.dp)
+                modifier = Modifier.fillMaxWidth().height(8.dp),
+                color = Purple40,
+                trackColor = Color.LightGray,
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -56,13 +63,13 @@ fun PreguntaScreen(
                 val esCorrecta = index == pregunta.correcta
 
                 val colorFondo = when {
-                    respondida && esCorrecta -> Color(0xFFD4EDDA)
-                    respondida && esSeleccionada && !esCorrecta -> Color(0xFFF8D7DA)
+                    respondida && esCorrecta -> ColorFondo_correcto
+                    respondida && esSeleccionada && !esCorrecta -> ColorFondo_incorrecto
                     else -> Color.Transparent
                 }
                 val colorBorde = when {
-                    respondida && esCorrecta -> Color(0xFF28A745)
-                    respondida && esSeleccionada && !esCorrecta -> Color(0xFFDC3545)
+                    respondida && esCorrecta -> ColorBorde_correcto
+                    respondida && esSeleccionada && !esCorrecta -> ColorBorde_incorrecto
                     esSeleccionada -> Color(0xFF624BFF)
                     else -> Color.LightGray
                 }
@@ -93,9 +100,9 @@ fun PreguntaScreen(
                         }
                         if (respondida) {
                             if (esCorrecta) {
-                                Text(text = "ok", color = Color(0xFF28A745), fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                                Text(text = "✓", color = ColorBorde_correcto, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                             } else if (esSeleccionada) {
-                                Text(text = "x", color = Color(0xFFDC3545), fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                                Text(text = "x", color = ColorBorde_incorrecto, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                             }
                         }
                     }
@@ -106,9 +113,9 @@ fun PreguntaScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 val respuestaCorrectaTexto = pregunta.opciones[pregunta.correcta]
                 val mensajeFeedback = if (seleccionada == pregunta.correcta) {
-                    "correcto!"
+                    "Correcto!"
                 } else {
-                    "incorrecto. la respuesta correcta es $respuestaCorrectaTexto."
+                    "Incorrecto. la respuesta correcta es $respuestaCorrectaTexto."
                 }
                 val colorBox = if (seleccionada == pregunta.correcta) Color(0xFFD4EDDA) else Color(0xFFF8D7DA)
                 val colorTexto = if (seleccionada == pregunta.correcta) Color(0xFF155724) else Color(0xFF721C24)
@@ -131,17 +138,17 @@ fun PreguntaScreen(
             Button(
                 onClick = onConfirmar,
                 enabled = seleccionada != null && !respondida,
-                modifier = Modifier.weight(1f).height(48.dp)
+                modifier = Modifier.weight(1f).height(48.dp), colors = ButtonDefaults.buttonColors(containerColor = Purple40)
             ) {
-                Text("confirmar")
+                Text(text = "Confirmar", fontWeight = FontWeight.Bold)
             }
 
             Button(
                 onClick = onSiguiente,
                 enabled = respondida,
-                modifier = Modifier.weight(1f).height(48.dp)
+                modifier = Modifier.weight(1f).height(48.dp), colors = ButtonDefaults.buttonColors(containerColor = Purple40)
             ) {
-                Text(if (numero == total) "ver resultados" else "siguiente")
+                Text(if (numero == total) "Ver Resultados" else "Siguiente", fontWeight = FontWeight.Bold)
             }
         }
     }
