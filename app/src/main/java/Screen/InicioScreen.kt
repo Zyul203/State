@@ -76,7 +76,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
                     fontWeight = FontWeight.Bold,
                 )
 
-                // Insignia con el total de artículos
+                // Insignia con el total de artículos6
                 Box(
                     modifier = Modifier
                         .size(36.dp)
