@@ -93,7 +93,7 @@ fun Resumen(propinaSeleccionada: Int, propinaSliderValor: Float, subtotal: Float
         {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
             {
-                if (propinaSeleccionada != 1) Text(text = "Propina ($propinaSeleccionada) %)") else Text(text = "Propina (${String.format("%.2f", propinaSliderValor)} %)")
+                if (propinaSeleccionada != 1) Text(text = "Propina (${propinaSeleccionada}) %)") else Text(text = "Propina (${propinaSliderValor.toInt()} %)")
                 Text(text = "$ ${String.format("%.2f",subtotal)}")
             }
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)

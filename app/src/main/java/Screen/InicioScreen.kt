@@ -58,7 +58,6 @@ fun InicioScreen(modifier : Modifier = Modifier)
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
-
         )
 
         Text(text = "Propina", fontSize = 20.sp, fontWeight = FontWeight.Bold)
