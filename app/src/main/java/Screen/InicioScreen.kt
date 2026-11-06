@@ -37,13 +37,20 @@ fun InicioScreen(modifier : Modifier = Modifier)
 
     var montoInput by rememberSaveable { mutableStateOf("") }
     var propinaSeleccionada by rememberSaveable { mutableStateOf(0) }
-    var personasCantidad by rememberSaveable { mutableStateOf(0) }
+    var personasCantidad by rememberSaveable { mutableStateOf(1) }
     var redondearPersona by rememberSaveable { mutableStateOf(false) }
-    var subtotal: Float by rememberSaveable {mutableStateOf(0.00f) }
-    var total : Float by rememberSaveable {mutableStateOf(0.00f) }
-    var totalDividido : Float by rememberSaveable { mutableStateOf(0.00f) }
-    var propinaSliderValor by rememberSaveable { mutableStateOf(15f) } // Valor por defecto si elige "Otro"
+    var propinaSliderValor by rememberSaveable { mutableStateOf(0.0f) } // Valor por defecto si elige "Otro"
+    var propinaFinal by rememberSaveable { mutableStateOf(0.00)}
+    var subtotal : Double by rememberSaveable {mutableStateOf(0.0) }
+    var total : Double by rememberSaveable {mutableStateOf(0.0) }
 
+
+
+
+    val montoInputDouble = montoInput.toDoubleOrNull() ?: 0.0
+    propinaFinal = if (propinaSeleccionada != 1) montoInputDouble * (propinaSeleccionada / 100.0) else montoInputDouble * (propinaSliderValor / 100.0)
+    subtotal = montoInputDouble + propinaFinal
+    total = subtotal / personasCantidad
 
     Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(20.dp), verticalArrangement = Arrangement.spacedBy(15.dp))
     {
@@ -72,8 +79,8 @@ fun InicioScreen(modifier : Modifier = Modifier)
             Row (modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically)
             {
                 OutlinedIconButton(
-                    onClick = { if (personasCantidad > 0) personasCantidad-- },
-                    enabled = personasCantidad > 0,
+                    onClick = { if (personasCantidad > 1) personasCantidad-- },
+                    enabled = personasCantidad > 1,
                     modifier = Modifier.size(36.dp),
                     shape = CircleShape
                 ) {
@@ -87,8 +94,8 @@ fun InicioScreen(modifier : Modifier = Modifier)
                 )
 
                 OutlinedIconButton(
-                    onClick = { if (personasCantidad < 10) personasCantidad++ },
-                    enabled = personasCantidad < 10,
+                    onClick = { if (personasCantidad < 20) personasCantidad++ },
+                    enabled = personasCantidad < 20,
                     modifier = Modifier.size(36.dp),
                     shape = CircleShape
                 ) {
@@ -112,7 +119,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
         }
         HorizontalDivider()
 
-        Resumen(propinaSeleccionada = propinaSeleccionada, propinaSliderValor = propinaSliderValor, subtotal = subtotal, total = total, personasCantidad = personasCantidad)
+        Resumen(propinaSeleccionada = propinaSeleccionada, propinaSliderValor = propinaSliderValor, subtotal = subtotal, total = total, personasCantidad = personasCantidad, propinaFinal = propinaFinal)
     }
 }
 

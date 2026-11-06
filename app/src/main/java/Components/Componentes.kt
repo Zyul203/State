@@ -84,7 +84,7 @@ fun Propina(propinaSeleccionada: Int, OnPropinaSeleccionada: (Int) -> Unit, prop
 
 
 @Composable
-fun Resumen(propinaSeleccionada: Int, propinaSliderValor: Float, subtotal: Float, total: Float, personasCantidad: Int, modifier: Modifier = Modifier)
+fun Resumen(propinaSeleccionada: Int, propinaSliderValor: Float, subtotal: Double, total: Double, personasCantidad: Int, propinaFinal : Double)
 {
     Box(modifier = Modifier.fillMaxWidth().height(250.dp)
         .background(color = Color.LightGray, shape = RoundedCornerShape(20.dp)))
@@ -93,13 +93,13 @@ fun Resumen(propinaSeleccionada: Int, propinaSliderValor: Float, subtotal: Float
         {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
             {
-                if (propinaSeleccionada != 1) Text(text = "Propina (${propinaSeleccionada}) %)") else Text(text = "Propina (${propinaSliderValor.toInt()} %)")
-                Text(text = "$ ${String.format("%.2f",subtotal)}")
+                if (propinaSeleccionada != 1) Text(text = "Propina (${propinaSeleccionada} %)") else Text(text = "Propina (${propinaSliderValor.toInt()} %)")
+                Text(text = "$ ${String.format("%.2f",propinaFinal)}")
             }
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
             {
                 Text(text = "Total con propina")
-                Text(text = "$ ${String.format("%.2f",total)}")
+                Text(text = "$ ${String.format("%.2f",subtotal)}")
             }
             HorizontalDivider()
             Text(text = "Cada quien paga", modifier= Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
