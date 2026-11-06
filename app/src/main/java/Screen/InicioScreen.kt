@@ -4,13 +4,9 @@ package Screen
 import Components.Propina
 import Components.Resumen
 import android.annotation.SuppressLint
-import android.widget.Space
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -19,15 +15,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+import kotlin.math.ceil
 
 
 @SuppressLint("DefaultLocale")
@@ -43,6 +36,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
     var propinaFinal by rememberSaveable { mutableStateOf(0.00)}
     var subtotal : Double by rememberSaveable {mutableStateOf(0.0) }
     var total : Double by rememberSaveable {mutableStateOf(0.0) }
+    var sobrante: Double by rememberSaveable { mutableStateOf(0.0) }
 
 
 
@@ -51,6 +45,13 @@ fun InicioScreen(modifier : Modifier = Modifier)
     propinaFinal = if (propinaSeleccionada != 1) montoInputDouble * (propinaSeleccionada / 100.0) else montoInputDouble * (propinaSliderValor / 100.0)
     subtotal = montoInputDouble + propinaFinal
     total = subtotal / personasCantidad
+
+    if (redondearPersona == true)
+    {
+        sobrante = total
+        total = ceil(total)
+        sobrante = total - sobrante
+    }
 
     Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(20.dp), verticalArrangement = Arrangement.spacedBy(15.dp))
     {
@@ -119,7 +120,8 @@ fun InicioScreen(modifier : Modifier = Modifier)
         }
         HorizontalDivider()
 
-        Resumen(propinaSeleccionada = propinaSeleccionada, propinaSliderValor = propinaSliderValor, subtotal = subtotal, total = total, personasCantidad = personasCantidad, propinaFinal = propinaFinal)
+        Resumen(propinaSeleccionada = propinaSeleccionada, propinaSliderValor = propinaSliderValor, subtotal = subtotal, total = total,
+            personasCantidad = personasCantidad, propinaFinal = propinaFinal, sobrante = sobrante, redondearPersona = redondearPersona)
     }
 }
 

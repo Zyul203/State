@@ -1,6 +1,7 @@
 package Components
 
 import android.annotation.SuppressLint
+import android.text.BoringLayout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -82,9 +83,9 @@ fun Propina(propinaSeleccionada: Int, OnPropinaSeleccionada: (Int) -> Unit, prop
     }
 }
 
-
 @Composable
-fun Resumen(propinaSeleccionada: Int, propinaSliderValor: Float, subtotal: Double, total: Double, personasCantidad: Int, propinaFinal : Double)
+fun Resumen(propinaSeleccionada: Int, propinaSliderValor: Float, subtotal: Double, total: Double,
+            personasCantidad: Int, propinaFinal : Double, sobrante : Double, redondearPersona: Boolean)
 {
     Box(modifier = Modifier.fillMaxWidth().height(250.dp)
         .background(color = Color.LightGray, shape = RoundedCornerShape(20.dp)))
@@ -105,7 +106,13 @@ fun Resumen(propinaSeleccionada: Int, propinaSliderValor: Float, subtotal: Doubl
             Text(text = "Cada quien paga", modifier= Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
             Text(text = "$ ${String.format("%.2f", total)}", modifier= Modifier.fillMaxWidth(), textAlign = TextAlign.Center , fontWeight = FontWeight.ExtraBold, fontSize = 50.sp)
             Text(text = "entre $personasCantidad personas", modifier= Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
-            Text(text = "Sobrante por redondeo $0.00", modifier= Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+            if (redondearPersona == false)
+            {
+                Text(text = "Sobrante por redondeo: $ 0.00", modifier= Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+            } else
+            {
+                Text(text = "Sobrante por redondeo: $ ${String.format("%.2f",sobrante)}", modifier= Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+            }
         }
     }
 }
