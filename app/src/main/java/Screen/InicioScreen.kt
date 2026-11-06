@@ -48,7 +48,7 @@ fun InicioScreen(modifier: Modifier = Modifier) {
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
                 textAlign = TextAlign.End,
-                maxLines = 2
+                maxLines = 1
             )
         }
 
