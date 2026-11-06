@@ -67,7 +67,7 @@ fun AforoMainCard( personasSala: Int, aforoMax: Int, modifier: Modifier = Modifi
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Barra de progreso
+            // Barra de progreso,
             LinearProgressIndicator(
                 progress = { porcentaje },
                 color = colorIndicador,
