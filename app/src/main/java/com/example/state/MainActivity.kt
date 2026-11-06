@@ -1,6 +1,6 @@
 package com.example.state
 
-import Screen.InicioScreen
+import Screen.Screens
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             StateTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    InicioScreen(modifier = Modifier.padding(innerPadding))
+                    Screens(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
 fun Preview() {
     StateTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            InicioScreen(modifier = Modifier.padding(innerPadding))
+            Screens(modifier = Modifier.padding(innerPadding))
         }
     }
 }
