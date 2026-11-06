@@ -125,14 +125,13 @@ fun InscripcionForm(
             modifier = Modifier.fillMaxWidth()
         )
 
-        // Menú desplegable para el Taller (Sin trailingIcon / sin Icons)
+        // Menú desplegable para el Taller (Sin trailingIcon)
         Box(modifier = Modifier.fillMaxWidth()) {
             OutlinedTextField(
                 value = taller,
                 onValueChange = {},
                 readOnly = true,
                 label = { Text("Taller") },
-                // Al quitar el trailingIcon, el campo queda limpio sin requerir la librería de iconos
                 modifier = Modifier.fillMaxWidth()
             )
             // Superficie transparente encima para detectar el clic y abrir el menú
