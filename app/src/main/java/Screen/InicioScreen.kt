@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,7 +31,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
     val morado = colorResource(id = R.color.purple_500)
 
     // Catálogo de productos fijo
-    val catalogo: List<Producto> = remember {
+    val catalogo: List<Producto> = rememberSaveable() {
         listOf(
             Producto("Tortillas 1 kg", 24.00),
             Producto("Leche 1 L", 27.50),
@@ -39,7 +40,7 @@ fun InicioScreen(modifier : Modifier = Modifier)
         )
     }
 
-    val cantidades = remember { mutableStateListOf(0, 0, 0, 0) }
+    val cantidades = rememberSaveable() { mutableStateListOf(0, 0, 0, 0) }
     val totalArticulos = cantidades.sum()
 
     val subtotal = catalogo.indices.sumOf { i ->
