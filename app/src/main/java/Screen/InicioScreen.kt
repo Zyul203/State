@@ -1,6 +1,5 @@
 package com.example.state
 
-
 import Components.AforoControles
 import Components.AforoMainCard
 import Components.CerrarDiaButton
@@ -12,7 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.state.ui.theme.gris
@@ -21,8 +19,12 @@ import com.example.state.ui.theme.gris
 
 const val AFORO_MAX = 50
 
+
+
+
+
 @Composable
-fun AforoScreen(modifier: Modifier = Modifier)
+fun AforoScreen2(modifier: Modifier = Modifier)
 {
     var personasSala by remember { mutableStateOf(30) }
     var visitasDelDia by remember { mutableStateOf(68) }
