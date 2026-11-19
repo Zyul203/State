@@ -25,12 +25,8 @@ fun InicioScreen(modifier: Modifier = Modifier,  viewModel: VM = viewModel())
     val morado = colorResource(id = R.color.purple_500)
     val state = viewModel.uiState
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-            .padding(20.dp)
-    ) {
+    Column( modifier = modifier.fillMaxSize().padding(20.dp))
+    {
         // Título
         Row(
             modifier = Modifier.fillMaxWidth(),
