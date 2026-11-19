@@ -1,6 +1,6 @@
 package Components
 
-import Screen.Producto
+import ViewModel.Producto
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,11 +29,8 @@ import com.example.state.R
 // Componente Fila de Producto
 @SuppressLint("DefaultLocale")
 @Composable
-fun ProductoItem(
-    producto: Producto,
-    cantidad: Int,
-    onCantidadChange: (Int) -> Unit
-) {
+fun ProductoItem(producto: Producto, cantidad: Int, onCantidadChange: (Int) -> Unit)
+{
     Row(
         modifier = Modifier
             .fillMaxWidth()

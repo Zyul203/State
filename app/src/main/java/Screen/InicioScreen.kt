@@ -20,10 +20,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.state.R
 
 @Composable
-fun InicioScreen(
-    modifier: Modifier = Modifier,
-    viewModel: VM = viewModel()
-) {
+fun InicioScreen(modifier: Modifier = Modifier,  viewModel: VM = viewModel())
+{
     val morado = colorResource(id = R.color.purple_500)
     val state = viewModel.uiState
 

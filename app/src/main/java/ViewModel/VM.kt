@@ -5,10 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
-data class Producto(
-    val nombre: String,
-    val precio: Double
-)
+data class Producto( val nombre: String, val precio: Double)
 
 data class CarritoUiState(
     val catalogo: List<Producto> = listOf(
