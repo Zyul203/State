@@ -2,13 +2,13 @@ package Screen
 
 import Components.ProductoItem
 import Components.ResumenCarrito
+import ViewModel.VM
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,142 +16,117 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.state.R
 
-
-data class Producto(
-    val nombre: String,
-    val precio: Double
-)
-
-
 @Composable
-fun InicioScreen(modifier : Modifier = Modifier)
-{
+fun InicioScreen(
+    modifier: Modifier = Modifier,
+    viewModel: VM = viewModel()
+) {
     val morado = colorResource(id = R.color.purple_500)
+    val state = viewModel.uiState
 
-    // Catálogo de productos fijo
-    val catalogo: List<Producto> = rememberSaveable() {
-        listOf(
-            Producto("Tortillas 1 kg", 24.00),
-            Producto("Leche 1 L", 27.50),
-            Producto("Huevo 12 pz", 52.00),
-            Producto("Frijol 1 kg", 38.00)
-        )
-    }
-
-    val cantidades = rememberSaveable() { mutableStateListOf(0, 0, 0, 0) }
-    val totalArticulos = cantidades.sum()
-
-    val subtotal = catalogo.indices.sumOf { i ->
-        catalogo[i].precio * cantidades[i]
-    }
-
-    // 10% si subtotal >= $200
-    val descuento = if (subtotal >= 200.0) subtotal * 0.10 else 0.0
-    val subtotalConDescuento = subtotal - descuento
-
-    // $0 sin artículos; GRATIS (0.0) si subtotal tras descuento >= $150; si no, $25.00
-    val costoEnvio = when {
-        totalArticulos == 0 -> 0.0
-        subtotalConDescuento >= 150.0 -> 0.0
-        else -> 25.0
-    }
-
-    val totalFinal = subtotalConDescuento + costoEnvio
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .statusBarsPadding()
-                .padding(20.dp)
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .statusBarsPadding()
+            .padding(20.dp)
+    ) {
+        // Título
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // Titulo
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+            Text(
+                text = "Tienda Don Pepe",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
             )
-            {
-                Text(text = "Tienda Don Pepe",
-                    fontSize = 24.sp,
+
+            // Insignia con el total de artículos
+            Box(
+                modifier = Modifier
+                    .size(36.dp)
+                    .background(morado, shape = CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "${state.totalArticulos}",
+                    color = Color.White,
                     fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp
                 )
-
-                // Insignia con el total de artículos
-                Box(
-                    modifier = Modifier
-                        .size(36.dp)
-                        .background(morado, shape = CircleShape),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = "$totalArticulos",
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp
-                    )
-                }
             }
+        }
 
-            Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
-            // Lista de productos
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                catalogo.forEachIndexed{ index, producto ->
-                    ProductoItem(
-                        producto = producto,
-                        cantidad = cantidades[index],
-                        onCantidadChange = { nuevaCantidad -> cantidades[index] = nuevaCantidad }
-                    )
-                    HorizontalDivider()
-                }
+        // Lista de productos
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            state.catalogo.forEachIndexed { index, producto ->
+                ProductoItem(
+                    producto = producto,
+                    cantidad = state.cantidades[index],
+                    onCantidadChange = { nuevaCantidad ->
+                        viewModel.onCantidadChange(index, nuevaCantidad)
+                    }
+                )
+                HorizontalDivider()
             }
+        }
 
-            // Card de Resumen del pedido
-            ResumenCarrito(
-                articulos = totalArticulos,
-                subtotal = subtotal,
-                descuento = descuento,
-                envio = costoEnvio,
-                total = totalFinal
+        if (state.pedidoConfirmado) {
+            Text(
+                text = "¡Pedido confirmado!",
+                color = Color(0xFF2E7D32),
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(bottom = 8.dp)
             )
+        }
 
-            Spacer(modifier = Modifier.height(15.dp))
+        // Card de Resumen del pedido
+        ResumenCarrito(
+            articulos = state.totalArticulos,
+            subtotal = state.subtotal,
+            descuento = state.descuento,
+            envio = state.costoEnvio,
+            total = state.totalFinal
+        )
 
-            // Botones de acción inferiores
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+        Spacer(modifier = Modifier.height(15.dp))
+
+        // Botones de acción inferiores
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            OutlinedButton(
+                onClick = viewModel::onVaciarClick,
+                modifier = Modifier
+                    .weight(1f)
+                    .height(50.dp),
+                shape = RoundedCornerShape(25.dp)
             ) {
-                OutlinedButton(
-                    onClick = {
-                        for (i in cantidades.indices) {
-                            cantidades[i] = 0
-                        }
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(50.dp),
-                    shape = RoundedCornerShape(25.dp),
-                ) {
-                    Text(text = "Vaciar", fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
-                }
+                Text(text = "Vaciar", fontSize = 15.sp, fontWeight = FontWeight.SemiBold)
+            }
 
-                Button(
-                    onClick = {},
-                    enabled = totalArticulos > 0,
-                    modifier = Modifier
-                        .weight(1.5f)
-                        .height(50.dp),
-                    shape = RoundedCornerShape(25.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = morado)
-                ) {
-                    Text(text = "Confirmar pedido", fontSize = 15.sp, fontWeight = FontWeight.Bold)
-                }
+            Button(
+                onClick = viewModel::onConfirmarPedidoClick,
+                enabled = state.puedeConfirmar,
+                modifier = Modifier
+                    .weight(1.5f)
+                    .height(50.dp),
+                shape = RoundedCornerShape(25.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = morado)
+            ) {
+                Text(text = "Confirmar pedido", fontSize = 15.sp, fontWeight = FontWeight.Bold)
             }
         }
     }
+}
 
