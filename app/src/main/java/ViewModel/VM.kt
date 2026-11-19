@@ -59,13 +59,11 @@ class VM : ViewModel()
             this[index] = cantidadAjustada
         }
 
-        uiState = uiState.copy(
-            cantidades = nuevasCantidades)
+        uiState = uiState.copy(cantidades = nuevasCantidades)
     }
 
     fun onVaciarClick() {
-        uiState = uiState.copy(
-            cantidades = List(uiState.catalogo.size) { 0 })
+        uiState = uiState.copy(cantidades = List(uiState.catalogo.size) { 0 })
     }
 
 }
