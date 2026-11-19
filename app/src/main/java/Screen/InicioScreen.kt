@@ -19,10 +19,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.state.ui.theme.gris
 
 @Composable
-fun AforoScreen(
-    modifier: Modifier = Modifier,
-    viewModel: VM = viewModel()
-) {
+fun AforoScreen(modifier: Modifier = Modifier, viewModel: VM = viewModel())
+{
     val state = viewModel.uiState
 
     Column(
@@ -31,7 +29,8 @@ fun AforoScreen(
             .background(Color.White)
             .padding(25.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
+    )
+    {
         Spacer(modifier = Modifier.height(25.dp))
 
         Text(

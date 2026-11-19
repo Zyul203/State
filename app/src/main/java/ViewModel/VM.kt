@@ -1,29 +1,25 @@
 package ViewModel
 
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
 const val AFORO_MAX = 50
 
-data class AforoUiState(
-    val personasSala: Int = 30,
-    val visitasDelDia: Int = 68
-) {
+data class AforoUiState( val personasSala: Int = 30,  val visitasDelDia: Int = 68)
+{
     val canSale: Boolean get() = personasSala > 0
     val canEntra: Boolean get() = personasSala < AFORO_MAX
 }
 
-class VM : ViewModel() {
-
-    var uiState by mutableIntStateOf(30).let {
-        // Mejor usemos mutableStateOf con AforoUiState para tener tdo en un solo objeto de estado:
-        androidx.compose.runtime.mutableStateOf(AforoUiState())
-    }
+class VM : ViewModel()
+{
+    var uiState by mutableStateOf(AforoUiState())
         private set
 
-    fun onEntraClick() {
+    fun onEntraClick()
+    {
         if (uiState.personasSala < AFORO_MAX) {
             uiState = uiState.copy(
                 personasSala = uiState.personasSala + 1,
@@ -32,7 +28,8 @@ class VM : ViewModel() {
         }
     }
 
-    fun onSaleClick() {
+    fun onSaleClick()
+    {
         if (uiState.personasSala > 0) {
             uiState = uiState.copy(
                 personasSala = uiState.personasSala - 1
@@ -40,7 +37,8 @@ class VM : ViewModel() {
         }
     }
 
-    fun onCerrarDiaClick() {
+    fun onCerrarDiaClick()
+    {
         uiState = uiState.copy(
             personasSala = 0,
             visitasDelDia = 0
