@@ -2,6 +2,7 @@ package Screen
 
 import Components.ControlesLectura
 import Components.VistaPrevia
+import ViewModel.VM
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,41 +14,30 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.sp
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.state.R
 
-
-
-enum class Interlineado(val medida : Float)
+enum class Interlineado(val medida: Float)
 {
     Compacto(1.0f),
     Normal(1.3f),
     Amplio(1.6f)
 }
 
-// 2. Pantalla Padre (Dueño del estado)
 @Composable
-fun LecturaScreen(modifier : Modifier = Modifier)
+fun LecturaScreen(modifier: Modifier = Modifier, viewModel: VM = viewModel())
 {
     val colorMorado = colorResource(id = R.color.purple_v1)
-
-    // Estados requeridos en la pantalla padre
-    var tamano by remember { mutableStateOf(18f) } // Valor por defecto 18 sp
-    var interlineado by remember { mutableStateOf(Interlineado.Normal) } // Por defecto Normal
-    var modoOscuro by remember { mutableStateOf(false) } // Por defecto claro
-    var usaSerif by remember { mutableStateOf(false) } // Por defecto Sans (false)
+    val state = viewModel.uiState
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .statusBarsPadding()
             .padding(16.dp),
@@ -62,40 +52,33 @@ fun LecturaScreen(modifier : Modifier = Modifier)
 
         // Controles de configuración
         ControlesLectura(
-            tamano = tamano,
-            onTamanoChange = { tamano = it },
-            interlineado = interlineado,
-            onInterlineadoChange = { interlineado = it },
-            modoOscuro = modoOscuro,
-            onModoOscuroChange = { modoOscuro = it },
-            usaSerif = usaSerif,
-            onUsaSerifChange = { usaSerif = it }
+            tamano = state.tamano,
+            onTamanoChange = viewModel::onTamanoChange,
+            interlineado = state.interlineado,
+            onInterlineadoChange = viewModel::onInterlineadoChange,
+            modoOscuro = state.modoOscuro,
+            onModoOscuroChange = viewModel::onModoOscuroChange,
+            usaSerif = state.usaSerif,
+            onUsaSerifChange = viewModel::onUsaSerifChange
         )
 
         // Vista previa en vivo
         VistaPrevia(
             texto = "Era una noche tranquila en el pueblo cuando las campanas comenzaron a sonar, y nadie supo por qué.",
-            tamano = tamano,
-            interlineado = interlineado,
-            modoOscuro = modoOscuro,
-            usaSerif = usaSerif
+            tamano = state.tamano,
+            interlineado = state.interlineado,
+            modoOscuro = state.modoOscuro,
+            usaSerif = state.usaSerif
         )
 
         // Botón Restablecer
         Button(
-            onClick = {
-                tamano = 18f
-                interlineado = Interlineado.Normal
-                modoOscuro = false
-                usaSerif = false
-            },
+            onClick = viewModel::onRestablecerClick,
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(24.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = colorMorado  )
+            colors = ButtonDefaults.buttonColors(containerColor = colorMorado)
         ) {
             Text(text = "Restablecer", color = Color.White)
         }
     }
 }
-
-
