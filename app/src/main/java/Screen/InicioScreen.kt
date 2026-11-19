@@ -39,7 +39,6 @@ fun LecturaScreen(modifier: Modifier = Modifier, viewModel: VM = viewModel())
     Column(
         modifier = modifier
             .fillMaxSize()
-            .statusBarsPadding()
             .padding(16.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
