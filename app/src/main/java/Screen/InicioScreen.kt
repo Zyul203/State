@@ -1,5 +1,7 @@
 package com.example.state
 
+import ViewModel.AFORO_MAX
+import ViewModel.VM
 import Components.AforoControles
 import Components.AforoMainCard
 import Components.CerrarDiaButton
@@ -7,27 +9,21 @@ import Components.VisitasCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.state.ui.theme.gris
 
-
-
-const val AFORO_MAX = 50
-
-
-
-
-
 @Composable
-fun AforoScreen2(modifier: Modifier = Modifier)
-{
-    var personasSala by remember { mutableStateOf(30) }
-    var visitasDelDia by remember { mutableStateOf(68) }
+fun AforoScreen(
+    modifier: Modifier = Modifier,
+    viewModel: VM = viewModel()
+) {
+    val state = viewModel.uiState
 
     Column(
         modifier = Modifier
@@ -35,8 +31,7 @@ fun AforoScreen2(modifier: Modifier = Modifier)
             .background(Color.White)
             .padding(25.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
-    )
-    {
+    ) {
         Spacer(modifier = Modifier.height(25.dp))
 
         Text(
@@ -51,33 +46,27 @@ fun AforoScreen2(modifier: Modifier = Modifier)
             color = gris
         )
 
-        //SECCION - Aforo disponible
+        // SECCION - Aforo disponible
         AforoMainCard(
-            personasSala = personasSala,
+            personasSala = state.personasSala,
             aforoMax = AFORO_MAX
         )
 
-        //SECCION - Botones Entra / Sale
+        // SECCION - Botones Entra / Sale
         AforoControles(
-            onSaleClick = { if (personasSala > 0) personasSala-- }, //En el llamado de funciones es donde le digo a las acciones o estados que hacer
-            onEntraClick = {
-                if (personasSala < AFORO_MAX)
-                {
-                    personasSala++
-                    visitasDelDia++
-                }
-            },
-            canSale = personasSala > 0, //Mientras se cumplan pasaran un true
-            canEntra = personasSala < AFORO_MAX
+            onSaleClick = viewModel::onSaleClick,
+            onEntraClick = viewModel::onEntraClick,
+            canSale = state.canSale,
+            canEntra = state.canEntra
         )
 
-        // SECCION: Tarjeta de Visitas del Dí
-        VisitasCard(visitasDelDia = visitasDelDia)
+        // SECCION: Tarjeta de Visitas del Día
+        VisitasCard(visitasDelDia = state.visitasDelDia)
 
         // SECCION: Leyenda de colores
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround //SpaceAround: Deja mismo espacio entre elementos | SpaceBetween: Primer elemento a la izq y ultimo elemento al final de la pantalla
+            horizontalArrangement = Arrangement.SpaceAround
         ) {
             Text(text = "🟢 Verde < 70%", fontSize = 12.sp, color = Color.DarkGray)
             Text(text = "🟡 Amarillo 70–99%", fontSize = 12.sp, color = Color.DarkGray)
@@ -88,11 +77,7 @@ fun AforoScreen2(modifier: Modifier = Modifier)
 
         // SECCION: Botón Cerrar Día
         CerrarDiaButton(
-            onClick = {
-                personasSala = 0
-                visitasDelDia = 0
-            }
+            onClick = viewModel::onCerrarDiaClick
         )
     }
 }
-
