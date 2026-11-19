@@ -1,5 +1,6 @@
 package Components
 
+import ViewModel.AFORO_MAX
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.state.AFORO_MAX
 import com.example.state.ui.theme.Purple40
 import com.example.state.ui.theme.amarilloClaro
 import com.example.state.ui.theme.amarilloFuerte
