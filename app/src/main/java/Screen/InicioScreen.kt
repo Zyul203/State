@@ -100,7 +100,7 @@ fun InicioScreen(modifier: Modifier = Modifier,  viewModel: VM = viewModel())
             }
 
             Button(
-                onClick = viewModel::onConfirmarPedidoClick,
+                onClick = {},
                 enabled = state.puedeConfirmar,
                 modifier = Modifier
                     .weight(1.5f)

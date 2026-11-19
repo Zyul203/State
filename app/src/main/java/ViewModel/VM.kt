@@ -60,16 +60,12 @@ class VM : ViewModel()
         }
 
         uiState = uiState.copy(
-            cantidades = nuevasCantidades,
-            pedidoConfirmado = false
-        )
+            cantidades = nuevasCantidades)
     }
 
     fun onVaciarClick() {
         uiState = uiState.copy(
-            cantidades = List(uiState.catalogo.size) { 0 },
-            pedidoConfirmado = false
-        )
+            cantidades = List(uiState.catalogo.size) { 0 })
     }
 
 }
