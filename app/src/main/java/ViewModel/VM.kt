@@ -14,9 +14,7 @@ data class CarritoUiState(
         Producto("Huevo 12 pz", 52.00),
         Producto("Frijol 1 kg", 38.00)
     ),
-    val cantidades: List<Int> = List(4) { 0 },
-    val pedidoConfirmado: Boolean = false
-)
+    val cantidades: List<Int> = List(4) { 0 })
 {
     val totalArticulos: Int
         get() = cantidades.sum()
@@ -74,9 +72,4 @@ class VM : ViewModel()
         )
     }
 
-    fun onConfirmarPedidoClick() {
-        if (uiState.puedeConfirmar) {
-            uiState = uiState.copy(pedidoConfirmado = true)
-        }
-    }
 }

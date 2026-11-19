@@ -73,16 +73,6 @@ fun InicioScreen(modifier: Modifier = Modifier,  viewModel: VM = viewModel())
             }
         }
 
-        if (state.pedidoConfirmado) {
-            Text(
-                text = "¡Pedido confirmado!",
-                color = Color(0xFF2E7D32),
-                fontWeight = FontWeight.Bold,
-                fontSize = 14.sp,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-        }
-
         // Card de Resumen del pedido
         ResumenCarrito(
             articulos = state.totalArticulos,
