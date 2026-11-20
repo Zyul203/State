@@ -1,5 +1,6 @@
 package Screen
 
+import ViewModel.VM
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -12,59 +13,42 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun Inicio(modifier: Modifier = Modifier) {
-    // 1. Estados principales (State Hoisting en la pantalla padre)
-    var nombre by remember { mutableStateOf("") }
-    var correo by remember { mutableStateOf("") }
-    var edad by remember { mutableStateOf("") }
-    var taller by remember { mutableStateOf("Fotografía") }
-    var aceptaAviso by remember { mutableStateOf(false) }
+fun Inicio(
+    modifier: Modifier = Modifier,
+    viewModel: VM = viewModel()
+) {
+    val state = viewModel.uiState
 
-    var intentoEnviar by remember { mutableStateOf(false) }
-    var inscrito by remember { mutableStateOf(false) }
-
-    // 2. Validaciones derivadas (solo actúan si intentoEnviar es true)
-    val errorNombre = if (intentoEnviar && nombre.length < 3) "El nombre debe tener al menos 3 caracteres" else null
-    val errorCorreo = if (intentoEnviar && (!correo.contains("@") || !correo.substringAfter("@").contains("."))) "Ingresa un correo válido" else null
-
-    val edadInt = edad.toIntOrNull()
-    val errorEdad = if (intentoEnviar && (edadInt == null || edadInt !in 12..99)) "La edad debe estar entre 12 y 99" else null
-    val errorAviso = if (intentoEnviar && !aceptaAviso) "Debes aceptar el aviso de privacidad" else null
-
-    // 3. Alternar entre pantallas según el estado de inscripción
-    if (inscrito) {
+    if (state.inscrito) {
         ConfirmacionScreen(
-            nombre = nombre,
-            correo = correo,
-            edad = edad,
-            taller = taller,
-            onNueva = {
-                // Limpiar campos y regresar al formulario
-                nombre = ""
-                correo = ""
-                edad = ""
-                taller = "Fotografía"
-                aceptaAviso = false
-                intentoEnviar = false
-                inscrito = false
-            }
+            nombre = state.nombre,
+            correo = state.correo,
+            edad = state.edad,
+            taller = state.taller,
+            onNueva = viewModel::onNueva,
+            modifier = modifier
         )
     } else {
         InscripcionForm(
-            nombre = nombre, onNombreChange = { nombre = it }, errorNombre = errorNombre,
-            correo = correo, onCorreoChange = { correo = it }, errorCorreo = errorCorreo,
-            edad = edad, onEdadChange = { if (it.all { char -> char.isDigit() }) edad = it }, errorEdad = errorEdad,
-            taller = taller, onTallerChange = { taller = it },
-            aceptaAviso = aceptaAviso, onAceptaAvisoChange = { aceptaAviso = it }, errorAviso = errorAviso,
-            onSubmit = {
-                intentoEnviar = true
-                // Si no hay errores, procedemos a marcar como inscrito
-                if (errorNombre == null && errorCorreo == null && errorEdad == null && errorAviso == null) {
-                    inscrito = true
-                }
-            }
+            nombre = state.nombre,
+            onNombreChange = viewModel::onNombreChange,
+            errorNombre = state.errorNombre,
+            correo = state.correo,
+            onCorreoChange = viewModel::onCorreoChange,
+            errorCorreo = state.errorCorreo,
+            edad = state.edad,
+            onEdadChange = viewModel::onEdadChange,
+            errorEdad = state.errorEdad,
+            taller = state.taller,
+            onTallerChange = viewModel::onTallerChange,
+            aceptaAviso = state.aceptaAviso,
+            onAceptaAvisoChange = viewModel::onAceptaAvisoChange,
+            errorAviso = state.errorAviso,
+            onSubmit = viewModel::onSubmit,
+            modifier = modifier
         )
     }
 }
@@ -76,13 +60,14 @@ fun InscripcionForm(
     edad: String, onEdadChange: (String) -> Unit, errorEdad: String?,
     taller: String, onTallerChange: (String) -> Unit,
     aceptaAviso: Boolean, onAceptaAvisoChange: (Boolean) -> Unit, errorAviso: String?,
-    onSubmit: () -> Unit
+    onSubmit: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
     val talleresDisponibles = listOf("Pintura", "Fotografía", "Guitarra")
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -201,10 +186,11 @@ fun ConfirmacionScreen(
     correo: String,
     edad: String,
     taller: String,
-    onNueva: () -> Unit
+    onNueva: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(24.dp),
         verticalArrangement = Arrangement.Center,
