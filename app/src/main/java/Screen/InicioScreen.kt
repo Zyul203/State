@@ -1,11 +1,13 @@
 package Screen
 
 import Components.camposOutlineText
+import ViewModel.VM
+import ViewModel.loginEstado
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -13,110 +15,75 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.state.ui.theme.PurpleClaro
 import com.example.state.ui.theme.PurpleFuerte
 
-
-enum class loginEstado
-{
-    INACTIVO, ERROR, BLOQUEADO, EXITO
-}
 @Composable
-fun InicioScreen(modifier: Modifier = Modifier) {
-    var textoCorreo by remember { mutableStateOf("") }
-    var textoContrasena by remember { mutableStateOf("") }
-    var recordarme by remember { mutableStateOf(false) }
-    var intentosFallidos by remember { mutableStateOf(0) }
-    var estadoLogin by remember { mutableStateOf(loginEstado.INACTIVO) }
-    val maxIntentos = 3
-    val correoCorrecto = "paciente@vida.mx"
-    val passwordCorrecta = "Vida2025"
-    var passwordVisibility by remember { mutableStateOf(false) }
-    val mensajeError = when (estadoLogin)
-    {
-        loginEstado.ERROR -> "Correo o contraseña incorrectos (intento $intentosFallidos de $maxIntentos)"
-        loginEstado.BLOQUEADO -> "Demasiados intentos. Intente de nuevo más tarde."
-        else -> ""
-    }
+fun InicioScreen(
+    modifier: Modifier = Modifier,
+    viewModel: VM = viewModel()
+) {
+    val state = viewModel.uiState
 
-
-    when (estadoLogin) {
+    when (state.estadoLogin) {
         loginEstado.EXITO -> {
             HomeScreen(
-                email = textoCorreo,
-                onLogout = {
-                    textoCorreo = ""
-                    textoContrasena = ""
-                    recordarme = false
-                    intentosFallidos = 0
-                    estadoLogin = loginEstado.INACTIVO
-                }
+                email = state.textoCorreo,
+                onLogout = viewModel::onLogout
             )
         }
         else -> {
             Column(
-                modifier = Modifier.fillMaxSize(). padding(25.dp),
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(25.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
-            )
-            {
+            ) {
                 Box(
                     modifier = Modifier
                         .clip(CircleShape)
                         .size(90.dp)
                         .background(PurpleClaro),
                     contentAlignment = Alignment.Center
-                )
-                {
-                    Text(text = "+", fontSize = 50.sp,  color = PurpleFuerte)
+                ) {
+                    Text(text = "+", fontSize = 50.sp, color = PurpleFuerte)
                 }
                 Spacer(modifier = Modifier.height(15.dp))
                 Text(text = "Clínica Vida", fontSize = 30.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(text = "Consulta tus citas medicas")
 
-                //Seccion de OutlineTextField
-                camposOutlineText (
-                    Correo = textoCorreo,
-                    onCorreoChange = { textoCorreo = it },
-                    Contraseña = textoContrasena,
-                    onContraseñaChange = { textoContrasena = it },
-                    recordarme = recordarme,
-                    onRecordarmeChange = { recordarme = it },
-                    passwordVisibility = passwordVisibility,
-                    onPasswordVisibilityChange = { passwordVisibility = it }
+                // Seccion de OutlineTextField
+                camposOutlineText(
+                    Correo = state.textoCorreo,
+                    onCorreoChange = viewModel::onCorreoChange,
+                    Contraseña = state.textoContrasena,
+                    onContraseñaChange = viewModel::onContrasenaChange,
+                    recordarme = state.recordarme,
+                    onRecordarmeChange = viewModel::onRecordarmeChange,
+                    passwordVisibility = state.passwordVisibility,
+                    onPasswordVisibilityChange = viewModel::onPasswordVisibilityChange
                 )
 
-                if (mensajeError.isNotEmpty())
-                {
+                if (state.mensajeError.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(text = mensajeError, color = Color.Red, fontSize = 12.sp)
+                    Text(text = state.mensajeError, color = Color.Red, fontSize = 12.sp)
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                //Boton
+                // Boton
                 Button(
-                    onClick = {
-                        if (textoCorreo == correoCorrecto && textoContrasena == passwordCorrecta)
-                        {
-                            estadoLogin = loginEstado.EXITO
-                            intentosFallidos = 0
-                        } else {
-                            intentosFallidos++
-                            if (intentosFallidos >= maxIntentos)
-                            {
-                                estadoLogin = loginEstado.BLOQUEADO
-                            } else {
-                                estadoLogin = loginEstado.ERROR
-                            }
-                        }
-                    },
-                    enabled = estadoLogin != loginEstado.BLOQUEADO,
+                    onClick = viewModel::onEntrarClick,
+                    enabled = state.puedeEntrar,
                     modifier = Modifier.height(60.dp).fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor =  PurpleFuerte, contentColor = Color.White)
-                )
-                {
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = PurpleFuerte,
+                        contentColor = Color.White
+                    )
+                ) {
                     Text(text = "Entrar", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold)
                 }
 
@@ -128,8 +95,7 @@ fun InicioScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun HomeScreen(email: String, onLogout: () -> Unit)
-{
+fun HomeScreen(email: String, onLogout: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize().padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -144,8 +110,11 @@ fun HomeScreen(email: String, onLogout: () -> Unit)
         Button(
             onClick = onLogout,
             modifier = Modifier.width(200.dp),
-            colors = ButtonDefaults.buttonColors(containerColor =  PurpleFuerte, contentColor = Color.White))
-        {
+            colors = ButtonDefaults.buttonColors(
+                containerColor = PurpleFuerte,
+                contentColor = Color.White
+            )
+        ) {
             Text(text = "Cerrar sesión")
         }
     }
