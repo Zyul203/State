@@ -4,6 +4,7 @@ import Components.MontoTextField
 import Components.Propina
 import Components.RedondearSwitchRow
 import Components.Resumen
+import ViewModel.VM
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -18,10 +19,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @SuppressLint("DefaultLocale")
 @Composable
-fun InicioScreen(
-    modifier: Modifier = Modifier,
-    viewModel: InicioViewModel = viewModel()
-) {
+fun InicioScreen( modifier: Modifier = Modifier, viewModel: VM = viewModel())
+{
     val state = viewModel.uiState
 
     Column(
