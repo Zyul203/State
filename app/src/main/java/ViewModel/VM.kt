@@ -16,7 +16,6 @@ data class AforoUiState( val personasSala: Int = 30,  val visitasDelDia: Int = 6
 class VM : ViewModel()
 {
     var uiState by mutableStateOf(AforoUiState())
-        private set
 
     fun onEntraClick()
     {
