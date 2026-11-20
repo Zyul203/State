@@ -18,7 +18,8 @@ fun ResultadoScreen(
     onReintentar: () -> Unit,
     onCambiarJugador: () -> Unit,
     modifier: Modifier = Modifier
-) {
+)
+{
     val mensaje = when (puntaje) {
         in 0..2 -> "Sigue practicando..."
         in 3..4 -> "Buen Trabajo"

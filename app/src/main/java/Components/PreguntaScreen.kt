@@ -1,6 +1,6 @@
 package Components
 
-import Screen.Pregunta
+import ViewModel.Pregunta
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable

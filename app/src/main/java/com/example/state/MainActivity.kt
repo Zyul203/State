@@ -27,13 +27,3 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun Preview() {
-    StateTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            Screens(modifier = Modifier.padding(innerPadding))
-        }
-    }
-}
